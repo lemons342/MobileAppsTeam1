@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-
 class ScreenOne extends StatefulWidget {
   const ScreenOne({
     Key? key,
@@ -17,13 +16,11 @@ class _ScreenOneState extends State<ScreenOne> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text(
+      children: const [
+        Text(
           'APP',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 100
-          ),
+          style: TextStyle(fontSize: 100),
         ),
       ],
     );

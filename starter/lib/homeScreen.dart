@@ -15,16 +15,16 @@ class HomeScreen extends StatelessWidget {
         title: 'Paine Art Center and Gardens',
         description:
             'Take a look at botainical gardens, classic European-style architecture, an extensive art collection, and more.',
-        image: Image.asset('paine.png')),
+        image: Image.asset('assets/paine.png')),
     Activity(
         title: 'Oshkosh Public Museum',
-        image: Image.asset('osh_pub_museum.png')),
+        image: Image.asset('assets/osh_pub_museum.png')),
     Activity(
         title: 'Oshkosh Earth Science Club Gem & Mineral Show',
         description:
             'Displays of rocks, minerals, fossils, and jewelry. Door prizes and raffles.',
         date: DateTime.now(),
-        image: Image.asset('earth_science_club.png'))
+        image: Image.asset('assets/earth_science_club.png'))
   ];
 
   @override

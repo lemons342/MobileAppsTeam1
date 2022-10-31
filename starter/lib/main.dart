@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screen.dart';
+import 'cluans.dart';
 
 void main() {
   runApp(MaterialApp(title: 'My App', home: MyApp()));
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const ScreenOne(),
+          CluansWidget(),          ///Insert here
           BottomAppBar(
             color: Colors.black,
             child: IconTheme(

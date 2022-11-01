@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lab3/account.dart';
 import 'package:lab3/activity.dart';
-import 'package:lab3/homeScreen.dart';
+import 'package:lab3/createaccount.dart';
+import 'package:lab3/home_screen.dart';
+import 'package:lab3/login.dart';
 import 'screen.dart';
 
 void main() {
@@ -20,7 +23,9 @@ class _MyAppState extends State<MyApp> {
     ActivityScreen(),
     const ScreenOne(),
     HomeScreen(),
-    const ScreenOne()
+    Account(),
+    const CreateAccount(),
+    const Login()
   ];
 
   void _handleTap(int index) {
@@ -32,7 +37,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
           centerTitle: false,
@@ -79,10 +84,20 @@ class _MyAppState extends State<MyApp> {
                 icon: Icon(Icons.home),
                 label: 'Home Screen'),
             BottomNavigationBarItem(
-                tooltip: 'Settings',
+                tooltip: 'Account',
+                backgroundColor: Colors.black,
+                icon: Icon(Icons.person),
+                label: 'AcCount'),
+            BottomNavigationBarItem( 
+                tooltip: 'Create Account',
+                backgroundColor: Colors.black,
+                icon: Icon(Icons.person_add),
+                label: 'Create Account'),
+            BottomNavigationBarItem(
+                tooltip: 'Login',
                 backgroundColor: Colors.black,
                 icon: Icon(Icons.settings),
-                label: 'Settings'),
+                label: 'Login'),
           ],
         ),
       ),

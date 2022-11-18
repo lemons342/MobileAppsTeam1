@@ -1,47 +1,75 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: unused_local_variable
 
-class Login extends StatelessWidget{
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+class Login extends StatefulWidget {
   const Login({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
-    return Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-      Padding(padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0), child: 
-      Column(mainAxisAlignment:  MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: const [
-        Text("Email:"),
-        SizedBox(height: 50.0, child:
-        TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Email',
-          ),
-        ),)
-      ],)),
-      Padding(padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0), child: 
-      Column(mainAxisAlignment:  MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: const [
-        Text("Password:"),
-        SizedBox(height: 50.0, child:
-        TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Password',
-          ),
-        ),)
-      ],)),
-      Padding(padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0), child: 
-      Column(mainAxisAlignment:  MainAxisAlignment.center, children: const [
-        SizedBox(height: 50.0, width: 200.0, child: 
-          ElevatedButton(onPressed: null, child: Text("Login"))
-        )
-      ],)),
-      Padding(padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0), child: 
-      Column(mainAxisAlignment:  MainAxisAlignment.center, children: const [
-        SizedBox(height: 50.0, width: 200.0, child: 
-          ElevatedButton(onPressed: null, child: Text("To Create Account"))
-        )
-      ],)),
-    ],));
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  late String emailAddress;
+  late String password;
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Form(
+            key: _formKey,
+            child: Column(children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                ),
+                validator: (text) =>
+                    text!.isEmpty ? 'An email must be entered' : null,
+                onSaved: (text) => emailAddress = text!,
+              ),
+              TextFormField(
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                validator: (text) => text!.isEmpty
+                    ? 'A password must be entered'
+                    : null,
+                onSaved: (text) => password = text!,
+              ),
+              ElevatedButton(
+                  onPressed: _login,
+                  child: const Text('Login'))
+            ])));
+  }
+
+  void _login() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      try {
+        final credential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailAddress,
+          password: password,
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          SnackBar snackBar = const SnackBar(content: Text('The password provided is too weak.'), duration: Duration(milliseconds: 20000),);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        } else if (e.code == 'email-already-in-use') {
+          SnackBar snackBar = const SnackBar(content: Text('The account already exists for that email.'), duration: Duration(milliseconds: 20000),);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      } catch (e) {
+        //print(e);
+      }
+    }
   }
 }

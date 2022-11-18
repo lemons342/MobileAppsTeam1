@@ -10,10 +10,11 @@ import 'package:lab3/login.dart';
 import 'screen.dart';
 
 void main() async{
-  await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
   runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
 }
 
 class MyApp extends StatefulWidget {
@@ -24,7 +25,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int selectedIndex = 0;
+  int selectedIndex = 2;
   List<Widget> tabViews = [
     ActivityScreen(),
     const ScreenOne(),

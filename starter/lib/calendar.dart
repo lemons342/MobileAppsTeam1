@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab3/activity.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:lab3/home_screen.dart'; // remove once using database
+// import 'package:lab3/home_screen.dart'; // remove once using database
 
 class Calendar extends StatefulWidget {
   const Calendar({
@@ -93,13 +94,28 @@ class _CalendarState extends State<Calendar> {
   List<Activity> _getEventsForDay(DateTime day) {
     // method will be changed to interact with the database to only
     // pull activities whose date matches the date in the parameter
-    List<Activity> activities = HomeScreen().list;
+    final allActivities = FirebaseFirestore.instance.collection('activities');
     List<Activity> validActivities = [];
-    for (var element in activities) {
-      if (isSameDay(element.date, day)) {
-        validActivities.add(element);
+    var query = allActivities.where('date', isEqualTo: day);
+    query.get().then((querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        setState(() {
+          Activity currentActivity = Activity(
+              title: doc['title'],
+              description: doc['description'],
+              date: doc['date']);
+          validActivities.add(currentActivity);
+          print(currentActivity.toString());
+        });
       }
-    }
+    });
+
+    // List<Activity> activities = HomeScreen().list;
+    // for (var element in activities) {
+    //   if (isSameDay(element.date, day)) {
+    //     validActivities.add(element);
+    //   }
+    // }
     return validActivities;
   }
 }

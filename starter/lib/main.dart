@@ -1,3 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import 'package:flutter/material.dart';
 import 'package:lab3/account.dart';
 import 'package:lab3/activity.dart';
@@ -7,9 +10,12 @@ import 'package:lab3/home_screen.dart';
 import 'package:lab3/login.dart';
 import 'screen.dart';
 
-void main() {
-  runApp(const MaterialApp(
-      debugShowCheckedModeBanner: false, title: 'FreeTime', home: MyApp()));
+void main() async{
+  runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
 }
 
 class MyApp extends StatefulWidget {
@@ -20,7 +26,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int selectedIndex = 0;
+  int selectedIndex = 2;
   List<Widget> tabViews = [
     ActivityScreen(),
     const Calendar(),

@@ -10,6 +10,11 @@ class Activity {
   /// Activity constructor
   Activity({required this.title, this.description, this.image, this.date});
 
+  @override
+  String toString() {
+    return '$title, $description, $date';
+  }
+
   /// returns the date in the format MM/DD/YYYY
   String getDateAsString() {
     String dateAsString = date.toString();

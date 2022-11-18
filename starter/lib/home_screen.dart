@@ -5,7 +5,8 @@ import 'activity.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
-  // list of user's activites (will be changed to pull from user's saved activities)
+  // list of user's activites (will be changed to pull from user's saved
+  // activities & sorted by date)
   final List<Activity> list = [
     Activity(
         title: 'EAA Aviation Museum',
@@ -18,7 +19,8 @@ class HomeScreen extends StatelessWidget {
         image: Image.asset('assets/paine.png')),
     Activity(
         title: 'Oshkosh Public Museum',
-        image: Image.asset('assets/osh_pub_museum.png')),
+        image: Image.asset('assets/osh_pub_museum.png'),
+        date: DateTime.utc(2022, 12, 1)),
     Activity(
         title: 'Oshkosh Earth Science Club Gem & Mineral Show',
         description:

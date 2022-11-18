@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lab3/account.dart';
 import 'package:lab3/activity.dart';
+import 'package:lab3/calendar.dart';
 import 'package:lab3/createaccount.dart';
 import 'package:lab3/home_screen.dart';
 import 'package:lab3/login.dart';
 import 'screen.dart';
 
 void main() {
-  runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
+  runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false, title: 'FreeTime', home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -21,7 +23,7 @@ class _MyAppState extends State<MyApp> {
   int selectedIndex = 0;
   List<Widget> tabViews = [
     ActivityScreen(),
-    const ScreenOne(),
+    const Calendar(),
     HomeScreen(),
     Account(),
     const CreateAccount(),
@@ -42,7 +44,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           centerTitle: false,
           backgroundColor: Colors.black,
-          title: const Text('FreeTime'),  //Make this look better
+          title: const Text('FreeTime'), //Make this look better
           actions: [
             SizedBox(
               width: 200,
@@ -51,10 +53,11 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             // const IconButton(
-            //   onPressed: null, 
+            //   onPressed: null,
             //   icon: Icon(Icons.exit_to_app),
             // ),
-            const Icon(Icons.exit_to_app) //Tried to change to IconButton but was invisible
+            const Icon(Icons
+                .exit_to_app) //Tried to change to IconButton but was invisible
           ],
           //titleSpacing: 50,
           toolbarHeight: 70,
@@ -87,8 +90,8 @@ class _MyAppState extends State<MyApp> {
                 tooltip: 'Account',
                 backgroundColor: Colors.black,
                 icon: Icon(Icons.person),
-                label: 'AcCount'),
-            BottomNavigationBarItem( 
+                label: 'Account'),
+            BottomNavigationBarItem(
                 tooltip: 'Create Account',
                 backgroundColor: Colors.black,
                 icon: Icon(Icons.person_add),

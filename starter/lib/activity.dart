@@ -46,12 +46,12 @@ class ActivityScreen extends StatelessWidget {
 
   final List<Activity> upcomingList = [
     Activity(
-        title: 'EAA Airventure',
-        image: Image.asset('assets/airventure.jpg'),
-        description:
-            'Don\'t miss your chance to celebrate aviation in the most epic way possible at EAA AirVenture!',
-        date: DateTime(2023, 7, 24),
-        ),
+      title: 'EAA Airventure',
+      image: Image.asset('assets/airventure.jpg'),
+      description:
+          'Don\'t miss your chance to celebrate aviation in the most epic way possible at EAA AirVenture!',
+      date: DateTime(2023, 7, 24),
+    ),
   ];
 
   @override
@@ -61,7 +61,7 @@ class ActivityScreen extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            'OPEN ACTIVITIES',  //Make this look better!
+            'OPEN ACTIVITIES', //Make this look better!
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -89,12 +89,11 @@ class ActivityScreen extends StatelessWidget {
               },
             ),
           ),
-          
         ),
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            'UPCOMING ACTIVITIES',  //Make this look better!
+            'UPCOMING ACTIVITIES', //Make this look better!
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

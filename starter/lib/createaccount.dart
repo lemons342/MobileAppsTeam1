@@ -13,6 +13,7 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
+  //variables to store form information
   late String emailAddress;
   late String confirmedPassword;
 
@@ -29,7 +30,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   labelText: 'Email',
                 ),
                 validator: (text) =>
-                    text!.isEmpty ? 'An email must be entered' : null,
+                    text!.isEmpty ? 'An email must be entered' : null, //Attempt to validate if something was entered
                 onSaved: (text) => emailAddress = text!,
               ),
               TextFormField(
@@ -39,7 +40,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 decoration: const InputDecoration(
                   labelText: 'Password',
                 ),
-                validator: (text) => _validatePassword(password: text!)
+                validator: (text) => _validatePassword(password: text!) //Attempt to validate the password
                     ? 'A password must be entered'
                     : null,
                 onSaved: (text) => confirmedPassword = text!,
@@ -52,7 +53,7 @@ class _CreateAccountState extends State<CreateAccount> {
                   labelText: 'Confirm Password',
                 ),
                 validator: (text) =>
-                    _validateConfirmPassword(confirmPassword: text!)
+                    _validateConfirmPassword(confirmPassword: text!) //Attempt to validate the confirm password
                         ? 'Passwords must match'
                         : null,
               ),
@@ -63,6 +64,7 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   bool _validatePassword({required String password}) {
+    //Used so the passwords entered can be compared later
     confirmedPassword = password;
     if (password.isEmpty) {
       return true;
@@ -71,19 +73,22 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   bool _validateConfirmPassword({required String confirmPassword}) {
-    if (confirmPassword.isEmpty) {
-      return true;
+    if (confirmPassword.isEmpty) { //If no value was entered
+      return true; //then stop here and tell the user
     }
-    if (confirmPassword != confirmedPassword) {
-      return true;
+    if (confirmPassword != confirmedPassword) { //If the passwords don't match
+      return true; //then stop here and tell the user
     }
     return false;
   }
 
   void _createAccount() async {
+    //If the form validates 
     if (_formKey.currentState!.validate()) {
+      //then save the data
       _formKey.currentState!.save();
       try {
+        //Attempt to create a new account
         final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailAddress,
@@ -91,15 +96,15 @@ class _CreateAccountState extends State<CreateAccount> {
         );
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
+          //If firebase thinks the password is too weak
           SnackBar snackBar = const SnackBar(content: Text('The password provided is too weak.'), duration: Duration(milliseconds: 20000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else if (e.code == 'email-already-in-use') {
+          //If the email is already connected to another account
           SnackBar snackBar = const SnackBar(content: Text('The account already exists for that email.'), duration: Duration(milliseconds: 20000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-      } catch (e) {
-        //print(e);
-      }
+      } 
     }
   }
 }

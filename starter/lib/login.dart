@@ -13,6 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  //variables to store form information
   late String emailAddress;
   late String password;
 
@@ -29,7 +30,7 @@ class _LoginState extends State<Login> {
                   labelText: 'Email',
                 ),
                 validator: (text) =>
-                    text!.isEmpty ? 'An email must be entered' : null,
+                    text!.isEmpty ? 'An email must be entered' : null, //Attempt to validate if something was entered
                 onSaved: (text) => emailAddress = text!,
               ),
               TextFormField(
@@ -39,7 +40,7 @@ class _LoginState extends State<Login> {
                 decoration: const InputDecoration(
                   labelText: 'Password',
                 ),
-                validator: (text) => text!.isEmpty
+                validator: (text) => text!.isEmpty //Attempt to validate if something was entered
                     ? 'A password must be entered'
                     : null,
                 onSaved: (text) => password = text!,
@@ -51,24 +52,28 @@ class _LoginState extends State<Login> {
   }
 
   void _login() async {
+    //If the form validates 
     if (_formKey.currentState!.validate()) {
+      //then save the data
       _formKey.currentState!.save();
       try {
+        //Attempt to login the user
         final credential =
             await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailAddress,
           password: password,
         );
       } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          SnackBar snackBar = const SnackBar(content: Text('The password provided is too weak.'), duration: Duration(milliseconds: 20000),);
+        //Use a generic message for slightly more security
+        if (e.code == 'user-not-found') {
+          //If the user isn't found
+          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 20000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        } else if (e.code == 'email-already-in-use') {
-          SnackBar snackBar = const SnackBar(content: Text('The account already exists for that email.'), duration: Duration(milliseconds: 20000),);
+        } else if (e.code == 'wrong-password') {
+          //If the wrong password is used
+          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 20000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-      } catch (e) {
-        //print(e);
       }
     }
   }

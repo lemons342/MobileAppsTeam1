@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -13,8 +14,14 @@ import 'screen.dart';
 void main() async{
   runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
   await Firebase.initializeApp(
+    name: 'finalproject-team1',
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // if (Firebase.apps.isEmpty) {
+  //    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  // }else {
+  //    Firebase.app(); // if already initialized, use that one
+  // }
   
 }
 

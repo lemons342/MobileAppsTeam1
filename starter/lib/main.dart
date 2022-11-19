@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -9,7 +8,6 @@ import 'package:lab3/calendar.dart';
 import 'package:lab3/createaccount.dart';
 import 'package:lab3/home_screen.dart';
 import 'package:lab3/login.dart';
-import 'screen.dart';
 
 void main() async{
   runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
@@ -35,9 +33,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int selectedIndex = 2;
   List<Widget> tabViews = [
-    ActivityScreen(),
+    const ActivityScreen(),
     const Calendar(),
-    HomeScreen(),
+    const HomeScreen(),
     Account(),
     const CreateAccount(),
     const Login()

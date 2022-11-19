@@ -94,17 +94,18 @@ class _CalendarState extends State<Calendar> {
   List<Activity> _getEventsForDay(DateTime day) {
     // method will be changed to interact with the database to only
     // pull activities whose date matches the date in the parameter
-    final allActivities = FirebaseFirestore.instance.collection('activities');
+    final allActivities = FirebaseFirestore.instance.collection('testCollection');
     List<Activity> validActivities = [];
-    var query = allActivities.where('date', isEqualTo: day);
+    var query = allActivities.where('title', isEqualTo: "working");
     query.get().then((querySnapshot) {
       for (var doc in querySnapshot.docs) {
-        setState(() {
+        setState(() {   //setstate????
           Activity currentActivity = Activity(
               title: doc['title'],
               description: doc['description'],
               date: doc['date']);
           validActivities.add(currentActivity);
+          // ignore: avoid_print
           print(currentActivity.toString());
         });
       }

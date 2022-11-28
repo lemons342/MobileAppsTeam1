@@ -42,7 +42,7 @@ class _CalendarState extends State<Calendar> {
             setState(() {
               _selectedDay = selectedDay;
               _focusedDay = focusedDay; // update `_focusedDay` here as well
-              activities = _getEventsForDay(selectedDay);
+              activities = _getEventsForDay(_selectedDay!);
             });
           },
           calendarFormat: _calendarFormat,
@@ -95,18 +95,17 @@ class _CalendarState extends State<Calendar> {
     // method will be changed to interact with the database to only
     // pull activities whose date matches the date in the parameter
     final allActivities = FirebaseFirestore.instance.collection('activities');
-    List<Activity> validActivities = [];
-    var query = allActivities.where('date', isEqualTo: day);
+    List<Activity> validActivities = []; 
+    var formattedDay = day.toString().substring(0,10);
+    var query = allActivities.where('date', isEqualTo: formattedDay);
     query.get().then((querySnapshot) {
       for (var doc in querySnapshot.docs) {
-        setState(() {
           Activity currentActivity = Activity(
               title: doc['title'],
               description: doc['description'],
-              date: doc['date']);
+              date: DateTime.parse(doc['date']));
+          print(currentActivity);
           validActivities.add(currentActivity);
-          print(currentActivity.toString());
-        });
       }
     });
 

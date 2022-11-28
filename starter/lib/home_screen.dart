@@ -1,36 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'activity.dart';
 
 /// Home screen page
-class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
-
-  // list of user's activites (will be changed to pull from user's saved
-  // activities & sorted by date)
-  final List<Activity> list = [
-    Activity(
-        title: 'EAA Aviation Museum',
-        description:
-            'Explore world-class displays and galleries of over 200 historic planes.'),
-    Activity(
-        title: 'Paine Art Center and Gardens',
-        description:
-            'Take a look at botainical gardens, classic European-style architecture, an extensive art collection, and more.',
-        image: Image.asset('assets/paine.png')),
-    Activity(
-        title: 'Oshkosh Public Museum',
-        image: Image.asset('assets/osh_pub_museum.png'),
-        date: DateTime.utc(2022, 12, 1)),
-    Activity(
-        title: 'Oshkosh Earth Science Club Gem & Mineral Show',
-        description:
-            'Displays of rocks, minerals, fossils, and jewelry. Door prizes and raffles.',
-        date: DateTime.now(),
-        image: Image.asset('assets/earth_science_club.png'))
-  ];
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // list of user's activites (will be changed to pull from user's saved
+  @override
+
   Widget build(BuildContext context) {
+
+  List<Activity> activities = _getActivities();
+
     return Column(
       children: [
         const Padding(
@@ -50,14 +37,14 @@ class HomeScreen extends StatelessWidget {
             child: ListView.separated(
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title: Text(list[index].title),
-                  subtitle: Text(list[index].description ?? ''),
-                  leading: list[index].image,
-                  trailing: Text(list[index].getDateAsString()),
+                  title: Text(activities[index].title),
+                  subtitle: Text(activities[index].description ?? ''),
+                  leading: activities[index].image,
+                  trailing: Text(activities[index].getDateAsString()),
                   contentPadding: const EdgeInsets.all(10.0),
                 );
               },
-              itemCount: list.length,
+              itemCount: activities.length,
               separatorBuilder: (context, index) {
                 return const Divider(
                     color: Colors.grey, thickness: 1.0, height: 1.0);
@@ -67,5 +54,34 @@ class HomeScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  List<Activity> _getActivities() {
+    // method will be changed to interact with the database to only
+    // pull activities whose date matches the date in the parameter
+    final allActivities = FirebaseFirestore.instance.collection('activities');
+    List<Activity> validActivities = [];
+    var query = allActivities;
+    query.get().then((querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        setState(() {   //setstate????
+          Activity currentActivity = Activity(
+              title: doc['title'],
+              description: doc['description'],
+              date: doc['date']);
+          validActivities.add(currentActivity);
+          // ignore: avoid_print
+          print(currentActivity.toString());
+        });
+      }
+    });
+
+    // List<Activity> activities = HomeScreen().list;
+    // for (var element in activities) {
+    //   if (isSameDay(element.date, day)) {
+    //     validActivities.add(element);
+    //   }
+    // }
+    return validActivities;
   }
 }

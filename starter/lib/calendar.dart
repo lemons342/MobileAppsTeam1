@@ -109,12 +109,6 @@ class _CalendarState extends State<Calendar> {
       }
     });
 
-    // List<Activity> activities = HomeScreen().list;
-    // for (var element in activities) {
-    //   if (isSameDay(element.date, day)) {
-    //     validActivities.add(element);
-    //   }
-    // }
     return validActivities;
   }
 }

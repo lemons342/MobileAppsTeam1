@@ -8,13 +8,18 @@ import 'package:lab3/calendar.dart';
 import 'package:lab3/createaccount.dart';
 import 'package:lab3/home_screen.dart';
 import 'package:lab3/login.dart';
-import 'screen.dart';
 
 void main() async{
   runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
   await Firebase.initializeApp(
+    name: 'finalproject-team1',
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // if (Firebase.apps.isEmpty) {
+  //    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  // }else {
+  //    Firebase.app(); // if already initialized, use that one
+  // }
   
 }
 
@@ -28,9 +33,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int selectedIndex = 2;
   List<Widget> tabViews = [
-    ActivityScreen(),
+    const ActivityScreen(),
     const Calendar(),
-    HomeScreen(),
+    const HomeScreen(),
     Account(),
     const CreateAccount(),
     const Login()

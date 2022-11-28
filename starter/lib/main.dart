@@ -10,11 +10,12 @@ import 'package:lab3/home_screen.dart';
 import 'package:lab3/login.dart';
 
 void main() async{
-  runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     name: 'finalproject-team1',
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
   // if (Firebase.apps.isEmpty) {
   //    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   // }else {

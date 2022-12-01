@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab3/activity.dart';
 import 'package:table_calendar/table_calendar.dart';
-// import 'package:lab3/home_screen.dart'; // remove once using database
 
 class Calendar extends StatefulWidget {
   const Calendar({
@@ -27,10 +26,13 @@ class _CalendarState extends State<Calendar> {
 
   List<Activity> activities = [];
 
+  /**
+   * Imported calendar widget from api
+   */
   @override
   Widget build(BuildContext context) {
     _configureStartAndEndDates();
-
+    
     return Column(
       children: [
         TableCalendar(
@@ -62,7 +64,7 @@ class _CalendarState extends State<Calendar> {
         Expanded(
           child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
-                    title: Text(activities[index].title),
+                    title: Text(activities[index].title), //Shows activity depending on focusedDay
                   ),
               separatorBuilder: (context, index) => divider,
               itemCount: activities.length),

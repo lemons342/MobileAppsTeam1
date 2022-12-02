@@ -78,7 +78,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            'OPEN ACTIVITIES', //Make this look better!
+            'OPEN ACTIVITIES', 
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -91,7 +91,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
             padding: const EdgeInsets.all(10.0),
             child: ListView.separated(
               itemBuilder: (BuildContext context, int index) {
-                return ListTile(
+                return ListTile(  //Displays activities that are available to do
                   title: Text(activities[index].title),
                   subtitle: Text(activities[index].description ?? ''),
                   leading: activities[index].image,
@@ -110,7 +110,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            'UPCOMING ACTIVITIES', //Make this look better!
+            'UPCOMING ACTIVITIES', 
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
             padding: const EdgeInsets.all(10.0),
             child: ListView.separated(
               itemBuilder: (BuildContext context, int index) {
-                return ListTile(
+                return ListTile( //Displays activities that are time sensitive and coming up
                   title: Text(activities[index].title),
                   subtitle: Text(activities[index].description ?? ''),
                   leading: activities[index].image,

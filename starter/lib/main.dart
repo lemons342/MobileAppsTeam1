@@ -9,6 +9,7 @@ import 'createaccount.dart';
 import 'home_screen.dart';
 import 'login.dart';
 
+//Connecting to database before running appp
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -16,12 +17,6 @@ void main() async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
-  // if (Firebase.apps.isEmpty) {
-  //    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  // }else {
-  //    Firebase.app(); // if already initialized, use that one
-  // }
-  
 }
 
 class MyApp extends StatefulWidget {
@@ -31,9 +26,10 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  int selectedIndex = 2;
-  List<Widget> tabViews = [
+class _MyAppState extends State<MyApp> { 
+  int selectedIndex = 2; //default index to start at homescreen
+
+  List<Widget> tabViews = [ //list of calls to screens
     const ActivityScreen(),
     const Calendar(),
     const HomeScreen(),
@@ -58,7 +54,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Colors.black,
           title: const Text('FreeTime'), //Make this look better
           actions: [
-            SizedBox(
+            SizedBox( //title bar(top of screen)
               width: 200,
               child: Image.asset(
                 'assets/bbbs_logo.png',
@@ -67,14 +63,13 @@ class _MyAppState extends State<MyApp> {
             // const IconButton(
             //   onPressed: null,
             //   icon: Icon(Icons.exit_to_app),
-            // ),
+            // ), //button to redirect user to webpage (keep for now)
             const Icon(Icons
                 .exit_to_app) //Tried to change to IconButton but was invisible
           ],
-          //titleSpacing: 50,
           toolbarHeight: 70,
         ),
-        body: tabViews[selectedIndex],
+        body: tabViews[selectedIndex], //call to view depending on index
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           selectedIconTheme:
@@ -82,7 +77,7 @@ class _MyAppState extends State<MyApp> {
           unselectedItemColor: Colors.white,
           backgroundColor: Colors.black,
           onTap: _handleTap,
-          items: const [
+          items: const [ //*** temporary tabs for login and create account
             BottomNavigationBarItem(
                 tooltip: 'Activities',
                 backgroundColor: Colors.black,

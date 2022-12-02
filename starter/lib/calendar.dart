@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab3/activity.dart';
+import 'activity.dart';
 import 'package:table_calendar/table_calendar.dart';
 // import 'package:lab3/home_screen.dart'; // remove once using database
 
@@ -95,17 +95,17 @@ class _CalendarState extends State<Calendar> {
     // method will be changed to interact with the database to only
     // pull activities whose date matches the date in the parameter
     final allActivities = FirebaseFirestore.instance.collection('activities');
-    List<Activity> validActivities = []; 
-    var formattedDay = day.toString().substring(0,10);
+    List<Activity> validActivities = [];
+    var formattedDay = day.toString().substring(0, 10);
     var query = allActivities.where('date', isEqualTo: formattedDay);
     query.get().then((querySnapshot) {
       for (var doc in querySnapshot.docs) {
-          Activity currentActivity = Activity(
-              title: doc['title'],
-              description: doc['description'],
-              date: DateTime.parse(doc['date']));
-          print(currentActivity);
-          validActivities.add(currentActivity);
+        Activity currentActivity = Activity(
+            title: doc['title'],
+            description: doc['description'],
+            date: DateTime.parse(doc['date']));
+        print(currentActivity);
+        validActivities.add(currentActivity);
       }
     });
 

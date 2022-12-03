@@ -2,12 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'package:flutter/material.dart';
-import 'package:lab3/account.dart';
-import 'package:lab3/activity.dart';
-import 'package:lab3/calendar.dart';
-import 'package:lab3/createaccount.dart';
-import 'package:lab3/home_screen.dart';
-import 'package:lab3/login.dart';
+import 'account.dart';
+import 'activity.dart';
+import 'calendar.dart';
+import 'createaccount.dart';
+import 'home_screen.dart';
+import 'login.dart';
 
 //Connecting to database before running appp
 void main() async{

@@ -21,46 +21,66 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Form(
-            key: _formKey,
-            child: Column(children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-                validator: (text) =>
-                    text!.isEmpty ? 'An email must be entered' : null, //Attempt to validate if something was entered
-                onSaved: (text) => emailAddress = text!,
+    return Scaffold(
+      appBar: AppBar(centerTitle: false,
+          backgroundColor: Colors.black,
+          title: const Text('FreeTime'), //Make this look better
+          actions: [
+            SizedBox( //title bar(top of screen)
+              width: 200,
+              child: Image.asset(
+                'assets/bbbs_logo.png',
               ),
-              TextFormField(
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
+            ),
+            // const IconButton(
+            //   onPressed: null,
+            //   icon: Icon(Icons.exit_to_app),
+            // ), //button to redirect user to webpage (keep for now)
+            const Icon(Icons
+                .exit_to_app) //Tried to change to IconButton but was invisible
+          ],
+          toolbarHeight: 70,),
+      body: Center(
+          child: Form(
+              key: _formKey,
+              child: Column(children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                  ),
+                  validator: (text) =>
+                      text!.isEmpty ? 'An email must be entered' : null, //Attempt to validate if something was entered
+                  onSaved: (text) => emailAddress = text!,
                 ),
-                validator: (text) => _validatePassword(password: text!) //Attempt to validate the password
-                    ? 'A password must be entered'
-                    : null,
-                onSaved: (text) => confirmedPassword = text!,
-              ),
-              TextFormField(
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  labelText: 'Confirm Password',
+                TextFormField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  validator: (text) => _validatePassword(password: text!) //Attempt to validate the password
+                      ? 'A password must be entered'
+                      : null,
+                  onSaved: (text) => confirmedPassword = text!,
                 ),
-                validator: (text) =>
-                    _validateConfirmPassword(confirmPassword: text!) //Attempt to validate the confirm password
-                        ? 'Passwords must match'
-                        : null,
-              ),
-              ElevatedButton(
-                  onPressed: _createAccount,
-                  child: const Text('Create Account'))
-            ])));
+                TextFormField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Confirm Password',
+                  ),
+                  validator: (text) =>
+                      _validateConfirmPassword(confirmPassword: text!) //Attempt to validate the confirm password
+                          ? 'Passwords must match'
+                          : null,
+                ),
+                ElevatedButton(
+                    onPressed: _createAccount,
+                    child: const Text('Create Account'))
+              ]))),
+    );
   }
 
   bool _validatePassword({required String password}) {

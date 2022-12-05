@@ -64,7 +64,9 @@ class _CalendarState extends State<Calendar> {
         Expanded(
           child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
-                    title: Text(activities[index].title), //Shows activity depending on focusedDay
+                    title: Text(activities[index].title),
+                    subtitle: Text(activities[index].description ?? ''),
+                    leading: Text(activities[index].getDateAsString()), //Shows activity depending on focusedDay
                   ),
               separatorBuilder: (context, index) => divider,
               itemCount: activities.length),
@@ -105,8 +107,9 @@ class _CalendarState extends State<Calendar> {
         Activity currentActivity = Activity(
             title: doc['title'],
             description: doc['description'],
-            date: DateTime.parse(doc['date']));
+            date: DateTime.parse(doc['date'])); //error occuring here
         print(currentActivity);
+        print(DateTime.now());
         validActivities.add(currentActivity);
       }
     });

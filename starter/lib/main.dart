@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'account.dart';
@@ -8,6 +10,7 @@ import 'calendar.dart';
 import 'createaccount.dart';
 import 'home_screen.dart';
 import 'login.dart';
+import 'account_model.dart';
 
 //Connecting to database before running appp
 void main() async{
@@ -16,7 +19,66 @@ void main() async{
     name: 'finalproject-team1',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
+  runApp(ChangeNotifierProvider(
+    create: (context) => AccountModel(),
+    child: MaterialApp(title: 'FreeTime', home: MyApp(), routes: {'/home': (context) {
+          return const HomeScreen();
+        },
+        '/sign-in': ((context) {
+          return SignInScreen(
+            actions: [
+              ForgotPasswordAction(((context, email) {
+                Navigator.of(context)
+                    .pushNamed('/forgot-password', arguments: {'email': email});
+              })),
+              AuthStateChangeAction(((context, state) {
+                if (state is SignedIn || state is UserCreated) {
+                  var user = (state is SignedIn)
+                      ? state.user
+                      : (state as UserCreated).credential.user;
+                  if (user == null) {
+                    return;
+                  }
+                  if (state is UserCreated) {
+                    user.updateDisplayName(user.email!.split('@')[0]);
+                  }
+                  if (!user.emailVerified) {
+                    user.sendEmailVerification();
+                    const snackBar = SnackBar(
+                        content: Text(
+                            'Please check your email to verify your email address'));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+                }
+              })),
+            ],
+          );
+        }),
+        '/forgot-password': ((context) {
+          final arguments = ModalRoute.of(context)?.settings.arguments
+              as Map<String, dynamic>?;
+
+          return ForgotPasswordScreen(
+            email: arguments?['email'] as String,
+            headerMaxExtent: 200,
+          );
+        }),
+        '/profile': ((context) {
+          return ProfileScreen(
+            providers: const [],
+            actions: [
+              SignedOutAction(
+                ((context) {
+                  Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+                }),
+              ),
+            ],
+          );
+        })
+      },
+    )
+  ));
 }
 
 class MyApp extends StatefulWidget {

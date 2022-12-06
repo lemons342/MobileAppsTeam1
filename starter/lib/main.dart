@@ -1,13 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lab3/createaccount.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import 'account.dart';
 import 'activity.dart';
 import 'calendar.dart';
-import 'createaccount.dart';
 import 'home_screen.dart';
 import 'login.dart';
+import 'account_model.dart';
 
 //Connecting to database before running appp
 void main() async{
@@ -16,7 +18,20 @@ void main() async{
     name: 'finalproject-team1',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MaterialApp(title: 'FreeTime', home: MyApp()));
+  runApp(ChangeNotifierProvider(
+    create: (context) => AccountModel(),
+    child: MaterialApp(title: 'FreeTime', home: const MyApp(), routes: {'/home': (context) {
+          return const HomeScreen();
+        },
+        '/sign-in': ((context) {
+          return const Login();
+        }),
+        '/register': ((context) {
+          return const CreateAccount();
+        }),
+      },
+    )
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -25,16 +40,16 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
+AccountModel model = AccountModel();
 class _MyAppState extends State<MyApp> { 
-  int selectedIndex = 2; //default index to start at homescreen
+  int selectedIndex = 4; //default index to start at homescreen
+  
 
   List<Widget> tabViews = [ //list of calls to screens
     const ActivityScreen(),
     const Calendar(),
     const HomeScreen(),
-    Account(),
-    const CreateAccount(),
+    Account(model: model,),
     const Login()
   ];
 
@@ -47,7 +62,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           centerTitle: false,
@@ -98,11 +113,6 @@ class _MyAppState extends State<MyApp> {
                 backgroundColor: Colors.black,
                 icon: Icon(Icons.person),
                 label: 'Account'),
-            BottomNavigationBarItem(
-                tooltip: 'Create Account',
-                backgroundColor: Colors.black,
-                icon: Icon(Icons.person_add),
-                label: 'Create Account'),
             BottomNavigationBarItem(
                 tooltip: 'Login',
                 backgroundColor: Colors.black,

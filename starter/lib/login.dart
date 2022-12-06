@@ -47,7 +47,10 @@ class _LoginState extends State<Login> {
               ),
               ElevatedButton(
                   onPressed: _login,
-                  child: const Text('Login'))
+                  child: const Text('Login')),
+              ElevatedButton(
+                  onPressed: _register,
+                  child: const Text('Create Account')),
             ])));
   }
 
@@ -76,5 +79,9 @@ class _LoginState extends State<Login> {
         }
       }
     }
+  }
+
+  void _register(){
+    Navigator.of(context).pushNamed('/register');
   }
 }

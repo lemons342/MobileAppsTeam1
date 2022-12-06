@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
-        future: activities.get(),
+        future: activities.get(), 
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: Text('Waiting'));

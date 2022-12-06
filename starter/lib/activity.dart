@@ -66,94 +66,96 @@ class _ActivityScreenState extends State<ActivityScreen> {
   //   ),
   // ];
 
-  
-  
-
   @override
   Widget build(BuildContext context) {
-  CollectionReference activities = FirebaseFirestore.instance.collection('activities');
+    CollectionReference activities =
+        FirebaseFirestore.instance.collection('activities');
 
-  return FutureBuilder<QuerySnapshot>(future: activities.get(),
-    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      if (snapshot.connectionState == 
-                ConnectionState.waiting) { 
-              return const Center(child: Text('Waiting')); 
-            } else if (snapshot.hasError) { 
-              return const Center(child: Text('Error')); 
-            } else if (snapshot.hasData) { 
-              List<QueryDocumentSnapshot> currentActivities = snapshot.data!.docs; // all docs
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'OPEN ACTIVITIES', 
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
-                decoration: TextDecoration.underline),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ListView.separated(
-                itemCount: currentActivities.length,
-                itemBuilder: (context, index) {
-                  var currentActivity = currentActivities[index]; // the map stored in a QDS
-                    return ListTile(
-                    onTap: () => showDetailedInfo(context, index, isSignedUp: false),
-                    title: Text(currentActivity['title']),
-                    subtitle: Text(currentActivity['date']),
-                    );
-                },
-                separatorBuilder: (context, index) {
-                return const Divider(
-                    color: Colors.grey, thickness: 1.0, height: 1.0);
-              },
-            ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'UPCOMING ACTIVITIES', 
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
-                decoration: TextDecoration.underline),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ListView.separated(
-                itemCount: currentActivities.length,
-                itemBuilder: (context, index) {
-                  var currentActivity = currentActivities[index]; // the map stored in a QDS
-                    return ListTile(
-                    title: Text(currentActivity['title']),
-                    subtitle: Text(currentActivity['date']),
-                    );
-                },
-                separatorBuilder: (context, index) {
-                return const Divider(
-                    color: Colors.grey, thickness: 1.0, height: 1.0);
-              },
-            ),
-          ),
-        ),
-      ],
-    );
-            } else { 
-              return const Center( 
-                  child: Text('This probably won\'t be returned')); 
-            } 
-    }
-  );
-    
+    return FutureBuilder<QuerySnapshot>(
+        future: activities.get(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error'));
+          } else if (snapshot.hasData) {
+            List<QueryDocumentSnapshot> currentActivities =
+                snapshot.data!.docs; // all docs
+            return Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'OPEN ACTIVITIES',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListView.separated(
+                      itemCount: currentActivities.length,
+                      itemBuilder: (context, index) {
+                        var currentActivity =
+                            currentActivities[index]; // the map stored in a QDS
+                        return ListTile(
+                          onTap: () => showDetailedInfo(context, index,
+                              isSignedUp: false),
+                          title: Text(currentActivity['title']),
+                          subtitle: Text(currentActivity['date']),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                            color: Colors.grey, thickness: 1.0, height: 1.0);
+                      },
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'UPCOMING ACTIVITIES',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListView.separated(
+                      itemCount: currentActivities.length,
+                      itemBuilder: (context, index) {
+                        var currentActivity =
+                            currentActivities[index]; // the map stored in a QDS
+                        return ListTile(
+                          onTap: () => showDetailedInfo(context, index,
+                              isSignedUp: false),
+                          title: Text(currentActivity['title']),
+                          subtitle: Text(currentActivity['date']),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                            color: Colors.grey, thickness: 1.0, height: 1.0);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return const Center(
+                child: Text('This probably won\'t be returned'));
+          }
+        });
   }
   //unused function
   // Future<QuerySnapshot> _getActivities() async {
@@ -161,10 +163,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
   //   // pull activities whose date matches the date in the parameter
   //   CollectionReference activities = FirebaseFirestore.instance.collection('activities');
   //   Future<QuerySnapshot> allActivities = activities.get();
-  //   allActivities.then((querySnapshot) { 
-  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) { 
+  //   allActivities.then((querySnapshot) {
+  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) {
   //       Text('data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
-  //     } 
+  //     }
   //   });
 
   //   print('print');

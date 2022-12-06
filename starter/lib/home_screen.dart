@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 // import 'activity.dart';
 import 'utils.dart';
 
+import 'account_model.dart';
+
 /// Home screen page
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key, required this.model}) : super(key: key);
+  final AccountModel model;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
-        future: activities.get(),
+        future: activities.where('signedup', arrayContains: widget.model.GetUserEmail()).get(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: Text('Waiting'));

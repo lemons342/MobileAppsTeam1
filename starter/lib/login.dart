@@ -78,11 +78,11 @@ class _LoginState extends State<Login> {
         //Use a generic message for slightly more security
         if (e.code == 'user-not-found') {
           //If the user isn't found
-          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 20000),);
+          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else if (e.code == 'wrong-password') {
           //If the wrong password is used
-          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 20000),);
+          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       }

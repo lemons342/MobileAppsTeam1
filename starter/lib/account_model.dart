@@ -9,7 +9,7 @@ import 'firebase_options.dart';
 
 //Quick make of a way to have access to if the user is signed in or not across the app
 class AccountModel extends ChangeNotifier {
-  applicationState() {
+  AccountModel() {
     init();
   }
   

@@ -24,9 +24,6 @@ void main() async {
         title: 'FreeTime',
         home: const MyApp(),
         routes: {
-          '/home': (context) {
-            return const HomeScreen();
-          },
           '/register': ((context) {
             return Consumer<AccountModel>(builder: (context, model, child) {
               return CreateAccount(model: model);
@@ -60,7 +57,7 @@ class _MyAppState extends State<MyApp> {
           //list of calls to screens
           const ActivityScreen(),
           const Calendar(),
-          const HomeScreen(),
+          HomeScreen(model: model,),
           Account(model: model),
           Login(
             model: model,

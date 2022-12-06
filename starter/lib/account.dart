@@ -86,7 +86,7 @@ class _AccountState extends State<Account> {
   Future<QuerySnapshot> _getFavoriteActivities({required String email}) {
     return FirebaseFirestore.instance
         .collection('activities')
-        .where('Favorited', arrayContains: email)
+        .where('favorited', arrayContains: email)
         .get();
   }
 }

@@ -120,7 +120,17 @@ class _CalendarState extends State<Calendar> {
   }
 
   Future<QuerySnapshot> _getEventsForDay({required DateTime day}){
-    String date = '${day.year}-${day.month}-${day.day}';
+    String date = '${day.year}-';
+    if(day.month >= 10){
+      date += '${day.month}-';
+    }else{
+      date += '0${day.month}-';
+    }
+    if(day.day >= 10){
+      date += '${day.day}';
+    }else{
+      date += '0${day.day}';
+    }
     return FirebaseFirestore.instance
         .collection('activities')
         .where('date', isEqualTo: date)

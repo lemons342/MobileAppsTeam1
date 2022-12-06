@@ -23,12 +23,14 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     if(widget.model.loggedIn){
+      //If the user is already logged in, present a logout button
       return Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           ElevatedButton(onPressed: _logout, child: const Text('Logout'))
         ],)
       );
     }
+    //Otherwise present the login form 
     return Center(
         child: Form(
             key: _formKey,

@@ -34,12 +34,15 @@ class AccountModel extends ChangeNotifier {
 
   String GetUserEmail(){
     if(_loggedIn){
+      //Return the email if the user is logged in
       return FirebaseAuth.instance.currentUser!.email!;
     }
+    //Otherwise return nothing
     return '';
   }
 
   void Logout(){
+    //Logout the user
     FirebaseAuth.instance.signOut();
   }
 }

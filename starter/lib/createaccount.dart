@@ -22,9 +22,11 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
+    //If a logged user got here send them back
     if(widget.model.loggedIn){
       Navigator.of(context).pop();
     }
+    //Otherwise present the form
     return Scaffold(
       appBar: AppBar(centerTitle: false,
           backgroundColor: Colors.black,

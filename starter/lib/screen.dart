@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-/**
- * Placeholder screen for new tabs...will delete soon
- */
+/// Placeholder screen for new tabs...will delete soon
 class ScreenOne extends StatefulWidget {
   const ScreenOne({
     Key? key,

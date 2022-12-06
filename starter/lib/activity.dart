@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'utils.dart';
 
 /// Activity class that stores a title and possible image, description, and date
 class Activity {
@@ -70,9 +71,17 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
+  CollectionReference activities = FirebaseFirestore.instance.collection('activities');
 
-    List<Activity> activities = _getActivities();
-
+  return FutureBuilder<QuerySnapshot>(future: activities.get(),
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      if (snapshot.connectionState == 
+                ConnectionState.waiting) { 
+              return const Center(child: Text('Waiting')); 
+            } else if (snapshot.hasError) { 
+              return const Center(child: Text('Error')); 
+            } else if (snapshot.hasData) { 
+              List<QueryDocumentSnapshot> currentActivities = snapshot.data!.docs; // all docs
     return Column(
       children: [
         const Padding(
@@ -90,17 +99,16 @@ class _ActivityScreenState extends State<ActivityScreen> {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView.separated(
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(  //Displays activities that are available to do
-                  title: Text(activities[index].title),
-                  subtitle: Text(activities[index].description ?? ''),
-                  leading: activities[index].image,
-                  trailing: Text(activities[index].getDateAsString()),
-                  contentPadding: const EdgeInsets.all(10.0),
-                );
-              },
-              itemCount: activities.length,
-              separatorBuilder: (context, index) {
+                itemCount: currentActivities.length,
+                itemBuilder: (context, index) {
+                  var currentActivity = currentActivities[index]; // the map stored in a QDS
+                    return ListTile(
+                    onTap: () => showDetailedInfo(context, index, isSignedUp: false),
+                    title: Text(currentActivity['title']),
+                    subtitle: Text(currentActivity['date']),
+                    );
+                },
+                separatorBuilder: (context, index) {
                 return const Divider(
                     color: Colors.grey, thickness: 1.0, height: 1.0);
               },
@@ -122,17 +130,15 @@ class _ActivityScreenState extends State<ActivityScreen> {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView.separated(
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile( //Displays activities that are time sensitive and coming up
-                  title: Text(activities[index].title),
-                  subtitle: Text(activities[index].description ?? ''),
-                  leading: activities[index].image,
-                  trailing: Text(activities[index].getDateAsString()),
-                  contentPadding: const EdgeInsets.all(10.0),
-                );
-              },
-              itemCount: activities.length,
-              separatorBuilder: (context, index) {
+                itemCount: currentActivities.length,
+                itemBuilder: (context, index) {
+                  var currentActivity = currentActivities[index]; // the map stored in a QDS
+                    return ListTile(
+                    title: Text(currentActivity['title']),
+                    subtitle: Text(currentActivity['date']),
+                    );
+                },
+                separatorBuilder: (context, index) {
                 return const Divider(
                     color: Colors.grey, thickness: 1.0, height: 1.0);
               },
@@ -141,34 +147,28 @@ class _ActivityScreenState extends State<ActivityScreen> {
         ),
       ],
     );
+            } else { 
+              return const Center( 
+                  child: Text('This probably won\'t be returned')); 
+            } 
+    }
+  );
+    
   }
+  //unused function
+  // Future<QuerySnapshot> _getActivities() async {
+  //   // method will be changed to interact with the database to only
+  //   // pull activities whose date matches the date in the parameter
+  //   CollectionReference activities = FirebaseFirestore.instance.collection('activities');
+  //   Future<QuerySnapshot> allActivities = activities.get();
+  //   allActivities.then((querySnapshot) { 
+  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) { 
+  //       Text('data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
+  //     } 
+  //   });
 
-  List<Activity> _getActivities() {
-    // method will be changed to interact with the database to only
-    // pull activities whose date matches the date in the parameter
-    final allActivities = FirebaseFirestore.instance.collection('activities');
-    List<Activity> validActivities = [];
-    var query = allActivities;
-    query.get().then((querySnapshot) {
-      for (var doc in querySnapshot.docs) {
-        setState(() {   //setstate????
-          Activity currentActivity = Activity(
-              title: doc['title'],
-              description: doc['description'],
-              date: doc['date']);
-          validActivities.add(currentActivity);
-          // ignore: avoid_print
-          print(currentActivity.toString());
-        });
-      }
-    });
-
-    // List<Activity> activities = HomeScreen().list;
-    // for (var element in activities) {
-    //   if (isSameDay(element.date, day)) {
-    //     validActivities.add(element);
-    //   }
-    // }
-    return validActivities;
-  }
+  //   print('print');
+  //   print(allActivities);
+  //   return allActivities;
+  // }
 }

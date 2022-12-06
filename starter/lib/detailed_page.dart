@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'activity.dart';
+// import 'activity.dart';
 import 'utils.dart';
 
 class DetailedPage extends StatelessWidget {
@@ -10,6 +10,8 @@ class DetailedPage extends StatelessWidget {
   const DetailedPage(
       {Key? key, required this.activityIndex, required this.withDeleteButton})
       : super(key: key);
+
+  final TextStyle titleStyle = const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,15 @@ class DetailedPage extends StatelessWidget {
           } else if (snapshot.hasData) {
             var activityList = snapshot.data!.docs;
             var currentActivity = activityList[activityIndex];
-            return Text(currentActivity['title']);
+            return Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(currentActivity['title'], style: titleStyle, textAlign: TextAlign.center),
+                Text(currentActivity['description'] ?? ''),
+              ],
+            );
           } else {
             return const Center(
               child: Text('This shouldn\'t happen'),

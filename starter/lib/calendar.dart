@@ -60,13 +60,15 @@ class _CalendarState extends State<Calendar> {
           eventLoader: (day) => _getEventsForDay(day),
         ),
         divider,
+        
         Expanded(
           child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
-                    onLongPress: () =>
-                        showDetailedInfo(context, index, isSignedUp: false),
-                    title: Text(activities[index]
-                        .title), //Shows activity depending on focusedDay
+                    onTap: () =>
+                        showDetailedInfo(context, index, isSignedUp: true), 
+                    title: Text(activities[index].title),
+                    subtitle: Text(activities[index].description ?? ''),
+                    leading: Text(activities[index].getDateAsString()),
                   ),
               separatorBuilder: (context, index) => divider,
               itemCount: activities.length),
@@ -103,7 +105,8 @@ class _CalendarState extends State<Calendar> {
     var formattedDay = day.toString().substring(0, 10);
     var query = allActivities.where('date', isEqualTo: formattedDay);
     query.get().then((querySnapshot) {
-      for (var doc in querySnapshot.docs) {
+      //setState(() {
+        for (var doc in querySnapshot.docs) {
         Activity currentActivity = Activity(
             title: doc['title'],
             description: doc['description'],
@@ -111,6 +114,8 @@ class _CalendarState extends State<Calendar> {
         //print(currentActivity);
         validActivities.add(currentActivity);
       }
+      //});
+      
     });
 
     return validActivities;

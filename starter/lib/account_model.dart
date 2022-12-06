@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart'
   hide EmailAuthProvider, PhoneAuthProvider;
@@ -8,7 +10,7 @@ import 'firebase_options.dart';
 
 //Quick make of a way to have access to if the user is signed in or not across the app
 class AccountModel extends ChangeNotifier {
-  ApplicationState() {
+  applicationState() {
     init();
   }
   
@@ -33,5 +35,12 @@ class AccountModel extends ChangeNotifier {
       }
       notifyListeners();
     });
+  }
+
+  String GetUserEmail(){
+    if(_loggedIn){
+      return FirebaseAuth.instance.currentUser!.email!;
+    }
+    return '';
   }
 }

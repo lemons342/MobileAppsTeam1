@@ -28,21 +28,22 @@ class _AccountState extends State<Account> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text('Email: ${widget.model.GetUserEmail()}'),
+              Text('Email: ${widget.model.GetUserEmail()}',
+                  style: const TextStyle(fontSize: 18.0)),
             ],
           ),
           //Will list the favorite activites entered or selected by the user
           Column(
             children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [Text('Favorited Activites')]),
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: const [
+                Text('Favorited Activites', style: TextStyle(fontSize: 18.0))
+              ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   FutureBuilder<QuerySnapshot>(
-                      future:
-                          _getFavoriteActivities(email: widget.model.GetUserEmail()),
+                      future: _getFavoriteActivities(
+                          email: widget.model.GetUserEmail()),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (snapshot.connectionState ==
@@ -60,7 +61,7 @@ class _AccountState extends State<Account> {
                                   itemCount: snapshot.data!.size,
                                   itemBuilder: (context, index) {
                                     return ListTile(
-                                        title: Text(activities[index]['name'],
+                                        title: Text(activities[index]['title'],
                                             style: const TextStyle(
                                                 fontSize: 18.0)));
                                   },
@@ -83,10 +84,11 @@ class _AccountState extends State<Account> {
     ));
   }
 
+  //Used to retrieve favorited activites of the user
   Future<QuerySnapshot> _getFavoriteActivities({required String email}) {
     return FirebaseFirestore.instance
         .collection('activities')
-        .where('Favorited', arrayContains: email)
+        .where('favorited', arrayContains: email)
         .get();
   }
 }

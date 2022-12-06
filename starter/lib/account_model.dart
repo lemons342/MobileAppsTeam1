@@ -9,7 +9,7 @@ import 'firebase_options.dart';
 
 //Quick make of a way to have access to if the user is signed in or not across the app
 class AccountModel extends ChangeNotifier {
-  applicationState() {
+  AccountModel() {
     init();
   }
   
@@ -34,12 +34,15 @@ class AccountModel extends ChangeNotifier {
 
   String GetUserEmail(){
     if(_loggedIn){
+      //Return the email if the user is logged in
       return FirebaseAuth.instance.currentUser!.email!;
     }
+    //Otherwise return nothing
     return '';
   }
 
   void Logout(){
+    //Logout the user
     FirebaseAuth.instance.signOut();
   }
 }

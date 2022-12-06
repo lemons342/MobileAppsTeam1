@@ -75,7 +75,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
         future: activities.get(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: Text('Waiting'));
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error'));
           } else if (snapshot.hasData) {
@@ -139,7 +139,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                           onTap: () => showDetailedInfo(context, index,
                               isSignedUp: false),
                           title: Text(currentActivity['title']),
-                          subtitle: Text(currentActivity['date']),
+                          leading: Text(currentActivity['date']),
+                          subtitle: Text(currentActivity['description']),
                         );
                       },
                       separatorBuilder: (context, index) {

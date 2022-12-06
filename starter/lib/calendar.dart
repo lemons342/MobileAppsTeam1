@@ -104,7 +104,7 @@ class _CalendarState extends State<Calendar> {
     var formattedDay = day.toString().substring(0, 10);
     var query = allActivities.where('date', isEqualTo: formattedDay);
     query.get().then((querySnapshot) {
-      setState(() {
+      //setState(() {
         for (var doc in querySnapshot.docs) {
         Activity currentActivity = Activity(
             title: doc['title'],
@@ -113,7 +113,7 @@ class _CalendarState extends State<Calendar> {
         print(currentActivity);
         validActivities.add(currentActivity);
       }
-      });
+      //});
       
     });
 

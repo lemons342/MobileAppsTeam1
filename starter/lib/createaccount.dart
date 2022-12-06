@@ -22,9 +22,11 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
+    //If a logged user got here send them back
     if(widget.model.loggedIn){
       Navigator.of(context).pop();
     }
+    //Otherwise present the form
     return Scaffold(
       appBar: AppBar(centerTitle: false,
           backgroundColor: Colors.black,
@@ -121,11 +123,11 @@ class _CreateAccountState extends State<CreateAccount> {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           //If firebase thinks the password is too weak
-          SnackBar snackBar = const SnackBar(content: Text('The password provided is too weak.'), duration: Duration(milliseconds: 20000),);
+          SnackBar snackBar = const SnackBar(content: Text('The password provided is too weak.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else if (e.code == 'email-already-in-use') {
           //If the email is already connected to another account
-          SnackBar snackBar = const SnackBar(content: Text('The account already exists for that email.'), duration: Duration(milliseconds: 20000),);
+          SnackBar snackBar = const SnackBar(content: Text('The account already exists for that email.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       } 

@@ -23,12 +23,14 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     if(widget.model.loggedIn){
+      //If the user is already logged in, present a logout button
       return Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
           ElevatedButton(onPressed: _logout, child: const Text('Logout'))
         ],)
       );
     }
+    //Otherwise present the login form 
     return Center(
         child: Form(
             key: _formKey,
@@ -78,11 +80,11 @@ class _LoginState extends State<Login> {
         //Use a generic message for slightly more security
         if (e.code == 'user-not-found') {
           //If the user isn't found
-          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 20000),);
+          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else if (e.code == 'wrong-password') {
           //If the wrong password is used
-          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 20000),);
+          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       }

@@ -133,7 +133,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   var currentActivity = currentActivities[index]; // the map stored in a QDS
                     return ListTile(
                     title: Text(currentActivity['title']),
-                    subtitle: Text(currentActivity['date']),
+                    leading: Text(currentActivity['date']),
+                    subtitle: Text(currentActivity['description']),
                     );
                 },
                 separatorBuilder: (context, index) {

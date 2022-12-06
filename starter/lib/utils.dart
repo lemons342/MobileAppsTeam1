@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lab3/detailed_page.dart';
 import 'activity.dart';
 
 /// gets all activities from the database
-Future<QuerySnapshot> getAllActivities() {
+Future<QuerySnapshot<Map<String,dynamic>>> getAllActivities() {
   final allActivities = FirebaseFirestore.instance.collection('activities');
   return allActivities.get();
 }
@@ -28,4 +30,14 @@ List<Activity> getEventsForDay(DateTime day) {
   });
 
   return validActivities;
+}
+
+void showDetailedInfo(BuildContext context, int index, {required bool isSignedUp}) {
+  Navigator.of(context).push(
+    MaterialPageRoute(
+        builder: (context) => DetailedPage(
+              activityIndex: index,
+              withDeleteButton: isSignedUp,
+            )),
+  );
 }

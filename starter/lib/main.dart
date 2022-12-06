@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:lab3/createaccount.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'account.dart';
@@ -41,7 +40,7 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-AccountModel appState = AccountModel();
+AccountModel model = AccountModel();
 class _MyAppState extends State<MyApp> { 
   int selectedIndex = 4; //default index to start at homescreen
   
@@ -50,7 +49,7 @@ class _MyAppState extends State<MyApp> {
     const ActivityScreen(),
     const Calendar(),
     const HomeScreen(),
-    Account(),
+    Account(model: model,),
     const Login()
   ];
 

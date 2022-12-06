@@ -23,7 +23,7 @@ class _CalendarState extends State<Calendar> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _firstDay;
   DateTime? _lastDay;
-  DateTime? _selectedDay;
+  DateTime _selectedDay = DateTime.now();
 
   List<Activity> activities = [];
 
@@ -43,7 +43,7 @@ class _CalendarState extends State<Calendar> {
             setState(() {
               _selectedDay = selectedDay;
               _focusedDay = focusedDay; // update `_focusedDay` here as well
-              activities = _getEventsForDay(_selectedDay!);
+              //activities = _getEventsForDay(_selectedDay!);
             });
           },
           calendarFormat: _calendarFormat,
@@ -57,21 +57,45 @@ class _CalendarState extends State<Calendar> {
               _focusedDay = focusedDay;
             });
           },
-          eventLoader: (day) => _getEventsForDay(day),
+          //eventLoader: (day) => _getEventsForDay(day),
         ),
         divider,
         
-        Expanded(
-          child: ListView.separated(
-              itemBuilder: (context, index) => ListTile(
-                    onTap: () =>
-                        showDetailedInfo(context, index, isSignedUp: true), 
-                    title: Text(activities[index].title),
-                    subtitle: Text(activities[index].description ?? ''),
-                    leading: Text(activities[index].getDateAsString()),
+        FutureBuilder(
+          future: _getEventsForDay(day: _selectedDay),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: Text('Waiting'));
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error'));
+          } else if (snapshot.hasData) {
+            List<QueryDocumentSnapshot> currentActivities =
+                snapshot.data!.docs; // all docs
+            return
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListView.separated(
+                      itemCount: currentActivities.length,
+                      itemBuilder: (context, index) {
+                        var currentActivity =
+                            currentActivities[index]; // the map stored in a QDS
+                        return ListTile(
+                          onTap: () => showDetailedInfo(context, index, isSignedUp: true),
+                          title: Text(currentActivity['title']),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                            color: Colors.grey, thickness: 1.0, height: 1.0);
+                      },
+                    ),
                   ),
-              separatorBuilder: (context, index) => divider,
-              itemCount: activities.length),
+                );
+          } else {
+            return const Center(
+                child: Text('This probably won\'t be returned'));
+          }  },
         )
       ],
     );
@@ -95,6 +119,14 @@ class _CalendarState extends State<Calendar> {
         30);
   }
 
+  Future<QuerySnapshot> _getEventsForDay({required DateTime day}){
+    String date = '${day.year}-${day.month}-${day.day}';
+    return FirebaseFirestore.instance
+        .collection('activities')
+        .where('date', isEqualTo: date)
+        .get();
+  }
+/*
   /// Gets the activities for the given [day]
   /// (Will be implemented to pull from database)
   List<Activity> _getEventsForDay(DateTime day) {
@@ -120,4 +152,5 @@ class _CalendarState extends State<Calendar> {
 
     return validActivities;
   }
+  */
 }

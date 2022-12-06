@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'utils.dart';
 
 /// Activity class that stores a title and possible image, description, and date
 class Activity {
@@ -102,6 +103,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 itemBuilder: (context, index) {
                   var currentActivity = currentActivities[index]; // the map stored in a QDS
                     return ListTile(
+                    onTap: () => showDetailedInfo(context, index, isSignedUp: false),
                     title: Text(currentActivity['title']),
                     subtitle: Text(currentActivity['date']),
                     );
@@ -155,19 +157,19 @@ class _ActivityScreenState extends State<ActivityScreen> {
     
   }
   //unused function
-  Future<QuerySnapshot> _getActivities() async {
-    // method will be changed to interact with the database to only
-    // pull activities whose date matches the date in the parameter
-    CollectionReference activities = FirebaseFirestore.instance.collection('activities');
-    Future<QuerySnapshot> allActivities = activities.get();
-    allActivities.then((querySnapshot) { 
-      for (QueryDocumentSnapshot qds in querySnapshot.docs) { 
-        Text('data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
-      } 
-    });
+  // Future<QuerySnapshot> _getActivities() async {
+  //   // method will be changed to interact with the database to only
+  //   // pull activities whose date matches the date in the parameter
+  //   CollectionReference activities = FirebaseFirestore.instance.collection('activities');
+  //   Future<QuerySnapshot> allActivities = activities.get();
+  //   allActivities.then((querySnapshot) { 
+  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) { 
+  //       Text('data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
+  //     } 
+  //   });
 
-    print('print');
-    print(allActivities);
-    return allActivities;
-  }
+  //   print('print');
+  //   print(allActivities);
+  //   return allActivities;
+  // }
 }

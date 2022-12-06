@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'activity.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'utils.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({
@@ -26,13 +27,11 @@ class _CalendarState extends State<Calendar> {
 
   List<Activity> activities = [];
 
-  /**
-   * Imported calendar widget from api
-   */
+  /// Imported calendar widget from api
   @override
   Widget build(BuildContext context) {
     _configureStartAndEndDates();
-    
+
     return Column(
       children: [
         TableCalendar(
@@ -65,9 +64,11 @@ class _CalendarState extends State<Calendar> {
         Expanded(
           child: ListView.separated(
               itemBuilder: (context, index) => ListTile(
+                    onTap: () =>
+                        showDetailedInfo(context, index, isSignedUp: true), 
                     title: Text(activities[index].title),
                     subtitle: Text(activities[index].description ?? ''),
-                    leading: Text(activities[index].getDateAsString()), //Shows activity depending on focusedDay
+                    leading: Text(activities[index].getDateAsString()),
                   ),
               separatorBuilder: (context, index) => divider,
               itemCount: activities.length),
@@ -109,8 +110,8 @@ class _CalendarState extends State<Calendar> {
         Activity currentActivity = Activity(
             title: doc['title'],
             description: doc['description'],
-            date: DateTime.parse(doc['date'])); //error occuring here
-        print(currentActivity);
+            date: DateTime.parse(doc['date']));
+        //print(currentActivity);
         validActivities.add(currentActivity);
       }
       //});

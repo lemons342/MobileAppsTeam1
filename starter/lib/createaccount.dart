@@ -3,10 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'account_model.dart';
+
 class CreateAccount extends StatefulWidget {
-  const CreateAccount({
-    Key? key,
-  }) : super(key: key);
+  const CreateAccount({Key? key, required this.model}) : super(key: key);
+  final AccountModel model;
 
   @override
   State<CreateAccount> createState() => _CreateAccountState();
@@ -21,6 +22,9 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.model.loggedIn){
+      Navigator.of(context).pop();
+    }
     return Scaffold(
       appBar: AppBar(centerTitle: false,
           backgroundColor: Colors.black,

@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         future: activities.where('signedup', arrayContains: widget.model.GetUserEmail()).get(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: Text('Waiting'));
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error'));
           } else if (snapshot.hasData) {

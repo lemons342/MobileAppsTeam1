@@ -128,9 +128,7 @@ class _CalendarState extends State<Calendar> {
   }
 /*
   /// Gets the activities for the given [day]
-  /// (Will be implemented to pull from database)
   List<Activity> _getEventsForDay(DateTime day) {
-    // method will be changed to interact with the database to only
     // pull activities whose date matches the date in the parameter
     final allActivities = FirebaseFirestore.instance.collection('activities');
     List<Activity> validActivities = [];
@@ -143,7 +141,6 @@ class _CalendarState extends State<Calendar> {
             title: doc['title'],
             description: doc['description'],
             date: DateTime.parse(doc['date']));
-        //print(currentActivity);
         validActivities.add(currentActivity);
       }
       //});

@@ -79,10 +79,11 @@ class _MyAppState extends State<MyApp> {
                     'assets/bbbs_logo.png',
                   ),
                 ),
-                // const IconButton(
-                //   onPressed: null,
-                //   icon: Icon(Icons.exit_to_app),
-                // ), //button to redirect user to webpage (keep for now)
+                //const IconButton(
+                //  color: Colors.white,
+                //  onPressed: null,
+                //  icon: Icon(Icons.exit_to_app),
+                //), //button to redirect user to webpage (keep for now)
                 const Icon(Icons
                     .exit_to_app) //Tried to change to IconButton but was invisible
               ],

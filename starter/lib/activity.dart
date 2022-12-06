@@ -18,7 +18,7 @@ class Activity {
   }
 
   /// returns the date in the format MM/DD/YYYY
-  String getDateAsString() {
+  String getDateAsString() { //used in calendar
     String dateAsString = date.toString();
     return date == null
         ? ''
@@ -34,46 +34,12 @@ class ActivityScreen extends StatefulWidget {
 }
 
 class _ActivityScreenState extends State<ActivityScreen> {
-  // list of user's activites (will be changed to pull from user's saved activities)
-  // final List<Activity> openList = [
-  //   Activity(
-  //       title: 'EAA Aviation Museum',
-  //       description:
-  //           'Explore world-class displays and galleries of over 200 historic planes.'),
-  //   Activity(
-  //       title: 'Paine Art Center and Gardens',
-  //       description:
-  //           'Take a look at botainical gardens, classic European-style architecture, an extensive art collection, and more.',
-  //       image: Image.asset('assets/paine.png')),
-  //   Activity(
-  //       title: 'Oshkosh Public Museum',
-  //       image: Image.asset('assets/osh_pub_museum.png')),
-  //   Activity(
-  //       title: 'Oshkosh Earth Science Club Gem & Mineral Show',
-  //       description:
-  //           'Displays of rocks, minerals, fossils, and jewelry. Door prizes and raffles.',
-  //       date: DateTime.now(),
-  //       image: Image.asset('assets/earth_science_club.png'))
-  // ];
-
-  // final List<Activity> upcomingList = [
-  //   Activity(
-  //     title: 'EAA Airventure',
-  //     image: Image.asset('assets/airventure.jpg'),
-  //     description:
-  //         'Don\'t miss your chance to celebrate aviation in the most epic way possible at EAA AirVenture!',
-  //     date: DateTime(2023, 7, 24),
-  //   ),
-  // ];
-
-  
-  
-
   @override
   Widget build(BuildContext context) {
-  CollectionReference activities = FirebaseFirestore.instance.collection('activities');
+    CollectionReference activities =
+        FirebaseFirestore.instance.collection('activities');
 
-  return FutureBuilder<QuerySnapshot>(future: activities.get(),
+  return FutureBuilder<QuerySnapshot>(future: activities.get(), //calling all activities from Firebase
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
       if (snapshot.connectionState == 
                 ConnectionState.waiting) { 
@@ -102,11 +68,15 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 itemCount: currentActivities.length,
                 itemBuilder: (context, index) {
                   var currentActivity = currentActivities[index]; // the map stored in a QDS
+                  // if (checkDate(currentActivity['date']) == true) {
                     return ListTile(
-                    onTap: () => showDetailedInfo(context, index, isSignedUp: false),
-                    title: Text(currentActivity['title']),
-                    subtitle: Text(currentActivity['date']),
+                      onTap: () => showDetailedInfo(context, index, isSignedUp: false),
+                      title: Text(currentActivity['title']),
+                      subtitle: Text(currentActivity['description']),
                     );
+                  // } else {
+                  //   return Text('Error');
+                  // }
                 },
                 separatorBuilder: (context, index) {
                 return const Divider(
@@ -133,11 +103,16 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 itemCount: currentActivities.length,
                 itemBuilder: (context, index) {
                   var currentActivity = currentActivities[index]; // the map stored in a QDS
+                    //if (checkDate(currentActivity['date']) == true) {
                     return ListTile(
-                    title: Text(currentActivity['title']),
-                    leading: Text(currentActivity['date']),
-                    subtitle: Text(currentActivity['description']),
+                      onTap: () => showDetailedInfo(context, index, isSignedUp: false),
+                      title: Text(currentActivity['title']),
+                      leading: Text(currentActivity['date']),
+                      subtitle: Text(currentActivity['description']),
                     );
+                  // } else {
+                  //   return Text('Error');
+                  // }
                 },
                 separatorBuilder: (context, index) {
                 return const Divider(
@@ -156,16 +131,34 @@ class _ActivityScreenState extends State<ActivityScreen> {
   );
     
   }
-  //unused function
+
+  bool checkDate(String date) {
+    int year = int.parse(date.substring(0,4));
+    int month = int.parse(date.substring(5,7));
+    int day = int.parse(date.substring(8,10));
+
+    String currentDate = DateTime.now().toString();
+
+    int currentYear = int.parse(currentDate.substring(0,4));
+    int currentMonth = int.parse(currentDate.substring(5,7));
+    int currentDay = int.parse(currentDate.substring(8,10));
+
+    if (year >= currentYear && month >= currentMonth && day >= currentDay) {
+      return true;
+    } else {
+      return false;
+    }
+  }  
+ //unused function
   // Future<QuerySnapshot> _getActivities() async {
   //   // method will be changed to interact with the database to only
   //   // pull activities whose date matches the date in the parameter
   //   CollectionReference activities = FirebaseFirestore.instance.collection('activities');
   //   Future<QuerySnapshot> allActivities = activities.get();
-  //   allActivities.then((querySnapshot) { 
-  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) { 
+  //   allActivities.then((querySnapshot) {
+  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) {
   //       Text('data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
-  //     } 
+  //     }
   //   });
 
   //   print('print');

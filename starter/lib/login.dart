@@ -25,8 +25,13 @@ class _LoginState extends State<Login> {
     if(widget.model.loggedIn){
       //If the user is already logged in, present a logout button
       return Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-          ElevatedButton(onPressed: _logout, child: const Text('Logout'))
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, 
+          crossAxisAlignment: CrossAxisAlignment.center, 
+          children: [
+            const Text('Logged in'),
+            //Text('Logged in as $emailAddress'),
+            ElevatedButton(onPressed: _logout, child: const Text('Logout'))
         ],)
       );
     }

@@ -45,4 +45,6 @@ class AccountModel extends ChangeNotifier {
     //Logout the user
     FirebaseAuth.instance.signOut();
   }
+
+  
 }

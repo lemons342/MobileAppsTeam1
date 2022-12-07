@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'detailed_page.dart';
+import 'account_model.dart';
 
 /// gets all activities from the database
 Future<QuerySnapshot<Map<String, dynamic>>> getAllActivities() {

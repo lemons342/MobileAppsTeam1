@@ -72,7 +72,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     return ListTile(
                       onTap: () => showDetailedInfo(context, index, isSignedUp: false),
                       title: Text(currentActivity['title']),
-                      subtitle: Text(currentActivity['description']),
+                      subtitle: Text(currentActivity['description'], maxLines: 2),
                     );
                   // } else {
                   //   return Text('Error');
@@ -103,16 +103,12 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 itemCount: currentActivities.length,
                 itemBuilder: (context, index) {
                   var currentActivity = currentActivities[index]; // the map stored in a QDS
-                    //if (checkDate(currentActivity['date']) == true) {
                     return ListTile(
                       onTap: () => showDetailedInfo(context, index, isSignedUp: false),
                       title: Text(currentActivity['title']),
                       leading: Text(currentActivity['date']),
-                      subtitle: Text(currentActivity['description']),
+                      subtitle: Text(currentActivity['description'], maxLines: 2),
                     );
-                  // } else {
-                  //   return Text('Error');
-                  // }
                 },
                 separatorBuilder: (context, index) {
                 return const Divider(
@@ -132,23 +128,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
     
   }
 
-  bool checkDate(String date) {
-    int year = int.parse(date.substring(0,4));
-    int month = int.parse(date.substring(5,7));
-    int day = int.parse(date.substring(8,10));
 
-    String currentDate = DateTime.now().toString();
-
-    int currentYear = int.parse(currentDate.substring(0,4));
-    int currentMonth = int.parse(currentDate.substring(5,7));
-    int currentDay = int.parse(currentDate.substring(8,10));
-
-    if (year >= currentYear && month >= currentMonth && day >= currentDay) {
-      return true;
-    } else {
-      return false;
-    }
-  }  
  //unused function
   // Future<QuerySnapshot> _getActivities() async {
   //   // method will be changed to interact with the database to only

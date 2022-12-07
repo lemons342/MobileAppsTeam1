@@ -22,8 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
     CollectionReference activities =
         FirebaseFirestore.instance.collection('activities');
 
-    return FutureBuilder<QuerySnapshot>(
-        future: activities.where('signedup', arrayContains: widget.model.GetUserEmail()).get(),
+    return StreamBuilder<QuerySnapshot>(
+        stream: activities
+            .where('signedUp', arrayContains: widget.model.GetUserEmail())
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -54,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         var currentActivity =
                             currentActivities[index]; // the map stored in a QDS
                         return ListTile(
-                          onTap: () => showDetailedInfo(context, index, isSignedUp: true),
+                          onTap: () => showDetailedInfo(
+                              widget.model, context, currentActivity,
+                              isSignedUp: true),
                           title: Text(currentActivity['title']),
                           subtitle: Text(currentActivity['date']),
                         );

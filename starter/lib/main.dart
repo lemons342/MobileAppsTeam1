@@ -1,17 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:lab3/createaccount.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import 'account.dart';
+import 'createaccount.dart';
 import 'activity.dart';
 import 'calendar.dart';
 import 'home_screen.dart';
 import 'login.dart';
 import 'account_model.dart';
 
-//Connecting to database before running appp
+//Connecting to database before running app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -49,15 +49,20 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  final TextStyle titleStyle = const TextStyle(
+      fontSize: 25, fontWeight: FontWeight.bold, letterSpacing: 2);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AccountModel>(
       builder: (context, model, child) {
         List<Widget> tabViews = [
           //list of calls to screens
-          const ActivityScreen(),
-          const Calendar(),
-          HomeScreen(model: model,),
+          ActivityScreen(model: model),
+          Calendar(model: model),
+          HomeScreen(
+            model: model,
+          ),
           Account(model: model),
           Login(
             model: model,
@@ -70,7 +75,8 @@ class _MyAppState extends State<MyApp> {
             appBar: AppBar(
               centerTitle: false,
               backgroundColor: Colors.black,
-              title: const Text('FreeTime'), //Make this look better
+              title:
+                  Text('FreeTime', style: titleStyle), //Make this look better
               actions: [
                 SizedBox(
                   //title bar(top of screen)

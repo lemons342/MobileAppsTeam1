@@ -21,7 +21,13 @@ class DetailedPage extends StatefulWidget {
 
 class _DetailedPageState extends State<DetailedPage> {
   final TextStyle titleStyle =
-      const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
+      const TextStyle(fontWeight: FontWeight.bold, fontSize: 40);
+
+  final TextStyle dateStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20);
+
+  final TextStyle descriptionStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,9 @@ class _DetailedPageState extends State<DetailedPage> {
             icon: const Icon(Icons.add));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Details'),
+        centerTitle: true,
+        title: const Text('Activity Details'),
+        backgroundColor: Colors.black,
         actions: [
           button,
         ],
@@ -57,7 +65,7 @@ class _DetailedPageState extends State<DetailedPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12.0),
             child: Text(widget.activity['title'], // activity title
                 style: titleStyle,
                 textAlign: TextAlign.center),
@@ -66,17 +74,19 @@ class _DetailedPageState extends State<DetailedPage> {
             height: 100,
             child:
                 Text(formatDateString(widget.activity['date']), // activity date
-                    textAlign: TextAlign.center),
+                    textAlign: TextAlign.center,
+                    style: dateStyle),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Text(
                     // activity description
                     widget.activity['description'] ?? '',
-                    textAlign: TextAlign.center),
+                    textAlign: TextAlign.center,
+                    style: descriptionStyle),
               ),
             ],
           ),
@@ -86,6 +96,9 @@ class _DetailedPageState extends State<DetailedPage> {
   }
 
   String formatDateString(String date) {
+    if (date.isEmpty) {
+      return '';
+    }
     final months = [
       'January',
       'February',

@@ -77,11 +77,24 @@ class _AccountState extends State<Account> {
                       })
                 ],
               ),
+              Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center, 
+                crossAxisAlignment: CrossAxisAlignment.center, 
+                children: [
+                  ElevatedButton(onPressed: _logout, child: const Text('Logout'))
+              ],)
+            )
             ],
           ),
         ],
       ),
     ));
+  }
+
+  
+  void _logout(){
+    widget.model.Logout();
   }
 
   //Used to retrieve favorited activites of the user

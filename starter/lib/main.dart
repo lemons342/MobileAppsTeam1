@@ -3,7 +3,6 @@ import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
-import 'account.dart';
 import 'createaccount.dart';
 import 'activity.dart';
 import 'calendar.dart';
@@ -29,8 +28,13 @@ void main() async {
               return CreateAccount(model: model);
             });
           }),
-        },
-      )));
+         '/login': ((context) {
+            return Consumer<AccountModel>(builder: (context, model, child) {
+              return Login(model: model);
+            });
+          }),
+        })
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -41,7 +45,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int selectedIndex = 4; //default index to start at homescreen
+  int selectedIndex = 3; //default index to start at homescreen
 
   void _handleTap(int index) {
     setState(() {
@@ -63,14 +67,13 @@ class _MyAppState extends State<MyApp> {
           HomeScreen(
             model: model,
           ),
-          Account(model: model),
           Login(
             model: model,
           )
         ];
 
         return DefaultTabController(
-          length: 5,
+          length: 4,
           child: Scaffold(
             appBar: AppBar(
               centerTitle: false,
@@ -121,15 +124,10 @@ class _MyAppState extends State<MyApp> {
                     icon: Icon(Icons.home),
                     label: 'Home Screen'),
                 BottomNavigationBarItem(
-                    tooltip: 'Account',
-                    backgroundColor: Colors.black,
-                    icon: Icon(Icons.person),
-                    label: 'Account'),
-                BottomNavigationBarItem(
-                    tooltip: 'Login',
+                    tooltip: 'Settings',
                     backgroundColor: Colors.black,
                     icon: Icon(Icons.settings),
-                    label: 'Login'),
+                    label: 'Settings'),
               ],
             ),
           ),

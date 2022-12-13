@@ -1,9 +1,8 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'account_model.dart';
+import 'account.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key, required this.model}) : super(key: key);
@@ -24,16 +23,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     if(widget.model.loggedIn){
       //If the user is already logged in, present a logout button
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, 
-          crossAxisAlignment: CrossAxisAlignment.center, 
-          children: [
-            const Text('Logged in'),
-            //Text('Logged in as $emailAddress'),
-            ElevatedButton(onPressed: _logout, child: const Text('Logout'))
-        ],)
-      );
+      return Account(model: widget.model);
     }
     //Otherwise present the login form 
     return Center(
@@ -76,8 +66,7 @@ class _LoginState extends State<Login> {
       _formKey.currentState!.save();
       try {
         //Attempt to login the user
-        final credential =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailAddress,
           password: password,
         );
@@ -94,10 +83,6 @@ class _LoginState extends State<Login> {
         }
       }
     }
-  }
-
-  void _logout(){
-    widget.model.Logout();
   }
 
   void _register(){

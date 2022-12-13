@@ -9,6 +9,7 @@ import 'calendar.dart';
 import 'home_screen.dart';
 import 'login.dart';
 import 'account_model.dart';
+import 'events.dart';
 
 //Connecting to database before running app
 void main() async {
@@ -22,6 +23,7 @@ void main() async {
       child: MaterialApp(
         title: 'FreeTime',
         home: const MyApp(),
+        theme: ThemeData(fontFamily: 'Montserrat'),
         routes: {
           '/register': ((context) {
             return Consumer<AccountModel>(builder: (context, model, child) {
@@ -45,7 +47,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int selectedIndex = 3; //default index to start at homescreen
+  int selectedIndex = 4; //default index to start at homescreen
 
   void _handleTap(int index) {
     setState(() {
@@ -63,6 +65,7 @@ class _MyAppState extends State<MyApp> {
         List<Widget> tabViews = [
           //list of calls to screens
           ActivityScreen(model: model),
+          EventScreen(model: model),
           Calendar(model: model),
           HomeScreen(
             model: model,
@@ -113,6 +116,11 @@ class _MyAppState extends State<MyApp> {
                     backgroundColor: Colors.black,
                     icon: Icon(Icons.volunteer_activism),
                     label: 'Activities'),
+                BottomNavigationBarItem(
+                    tooltip: 'Events',
+                    backgroundColor: Colors.black,
+                    icon: Icon(Icons.local_activity),
+                    label: 'Events'),
                 BottomNavigationBarItem(
                     tooltip: 'Calendar',
                     backgroundColor: Colors.black,

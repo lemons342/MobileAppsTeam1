@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils.dart';
 import 'account_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// Activity class that stores a title and possible image, description, and date
 class Activity {
@@ -38,13 +39,22 @@ class ActivityScreen extends StatefulWidget {
 }
 
 class _ActivityScreenState extends State<ActivityScreen> {
+  final TextStyle titleStyle =
+      const TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'Montserrat');
+
+  final TextStyle dateStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+
+  final TextStyle descriptionStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 18,);
+  
   @override
   Widget build(BuildContext context) {
     CollectionReference activities =
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
-        future: activities.get(), //calling all activities from Firebase
+        future: activities.where('date', isEqualTo: '').get(), //calling all activities from Firebase
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -56,54 +66,24 @@ class _ActivityScreenState extends State<ActivityScreen> {
             return Column(
               children: [
                 const Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'OPEN ACTIVITIES',
+                    'ACTIVITIES',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
-                        decoration: TextDecoration.underline),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ListView.separated(
-                      itemCount: currentActivities.length,
-                      itemBuilder: (context, index) {
-                        var currentActivity =
-                            currentActivities[index]; // the map stored in a QDS
-                        // if (checkDate(currentActivity['date']) == true) {
-                        return ListTile(
-                          onTap: () => showDetailedInfo(
-                              widget.model, context, currentActivity,
-                              isSignedUp: false),
-                          title: Text(currentActivity['title']),
-                          subtitle: Text(currentActivity['description']),
-                        );
-                        // } else {
-                        //   return Text('Error');
-                        // }
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider(
-                            color: Colors.grey, thickness: 1.0, height: 1.0);
-                      },
-                    ),
+                        //decoration: TextDecoration.underline
+                        ),
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'UPCOMING ACTIVITIES',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                        decoration: TextDecoration.underline),
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Divider(
+                                color: Color(0xFF00FC87), thickness: 4.0, height: 1.0
+                                ),
                   ),
-                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -112,18 +92,20 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       itemBuilder: (context, index) {
                         var currentActivity =
                             currentActivities[index]; // the map stored in a QDS
-                        //if (checkDate(currentActivity['date']) == true) {
                         return ListTile(
                           onTap: () => showDetailedInfo(
                               widget.model, context, currentActivity,
                               isSignedUp: false),
-                          title: Text(currentActivity['title']),
-                          leading: Text(currentActivity['date']),
-                          subtitle: Text(currentActivity['description']),
+                          title: Text(
+                            currentActivity['title'], // activity title
+                            style: titleStyle,
+                          ),
+                          subtitle: Text(
+                            currentActivity['description'], // activity title
+                            style: descriptionStyle,
+                            maxLines: 2,
+                            ),
                         );
-                        // } else {
-                        //   return Text('Error');
-                        // }
                       },
                       separatorBuilder: (context, index) {
                         return const Divider(
@@ -139,24 +121,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 child: Text('This probably won\'t be returned'));
           }
         });
-  }
-
-  bool checkDate(String date) {
-    int year = int.parse(date.substring(0, 4));
-    int month = int.parse(date.substring(5, 7));
-    int day = int.parse(date.substring(8, 10));
-
-    String currentDate = DateTime.now().toString();
-
-    int currentYear = int.parse(currentDate.substring(0, 4));
-    int currentMonth = int.parse(currentDate.substring(5, 7));
-    int currentDay = int.parse(currentDate.substring(8, 10));
-
-    if (year >= currentYear && month >= currentMonth && day >= currentDay) {
-      return true;
-    } else {
-      return false;
-    }
   }
   //unused function
   // Future<QuerySnapshot> _getActivities() async {

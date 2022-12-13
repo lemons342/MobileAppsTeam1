@@ -38,7 +38,7 @@ class AccountModel extends ChangeNotifier {
       return FirebaseAuth.instance.currentUser!.email!;
     }
     //Otherwise return nothing
-    return '';
+    return ' ';
   }
 
   void Logout(){

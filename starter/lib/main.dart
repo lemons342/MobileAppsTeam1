@@ -30,11 +30,6 @@ void main() async {
               return CreateAccount(model: model);
             });
           }),
-         '/login': ((context) {
-            return Consumer<AccountModel>(builder: (context, model, child) {
-              return Login(model: model);
-            });
-          }),
         })
   ));
 }

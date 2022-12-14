@@ -110,7 +110,9 @@ class _EventScreenState extends State<EventScreen> {
                         return ListTile(
                           onTap: () => showDetailedInfo(
                               widget.model, context, currentActivity,
-                              isSignedUp: false, isFavoritied: false),
+                              isSignedUp: false, 
+                              //isFavoritied: false
+                              ),
                           title: Text(
                             currentActivity['title'], // activity title
                             style: titleStyle,

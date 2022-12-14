@@ -117,7 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         return ListTile(
                           onTap: () => showDetailedInfo(
                               widget.model, context, currentActivity,
-                              isSignedUp: true, isFavoritied: false),
+                              isSignedUp: true, 
+                              //isFavoritied: false
+                              ),
                           title: Text(currentActivity['title']),
                           subtitle: Text(currentActivity['date']),
                         );

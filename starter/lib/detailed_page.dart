@@ -6,15 +6,17 @@ import 'utils.dart';
 class DetailedPage extends StatefulWidget {
   final QueryDocumentSnapshot activity;
   final bool withDeleteButton;
-  final bool withRemoveButton;
+  //final bool withRemoveButton;
   final AccountModel model;
 
   const DetailedPage(
-      {Key? key,
-      required this.model,
-      required this.activity,
-      required this.withDeleteButton,
-      required this.withRemoveButton})
+        {Key? key,
+        required this.model,
+        required this.activity,
+        required this.withDeleteButton,
+        //required this.withRemoveButton
+        }
+      )
       : super(key: key);
 
   @override

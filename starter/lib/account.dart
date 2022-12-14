@@ -46,7 +46,7 @@ class _AccountState extends State<Account> {
           Column(
             children: [
               SizedBox(
-                height: 200,
+                height: 500,
                 child: StreamBuilder<QuerySnapshot>(
                     stream: activities
                         .where('favorited',
@@ -134,13 +134,5 @@ class _AccountState extends State<Account> {
 
   void _logout() {
     widget.model.Logout();
-  }
-
-  //Used to retrieve favorited activites of the user
-  Future<QuerySnapshot> _getFavoriteActivities({required String email}) {
-    return FirebaseFirestore.instance
-        .collection('activities')
-        .where('favorited', arrayContains: email)
-        .get();
   }
 }

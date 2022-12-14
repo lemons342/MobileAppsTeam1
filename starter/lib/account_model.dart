@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, slash_for_doc_comments
 
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart'
@@ -6,8 +6,14 @@ import 'package:firebase_auth/firebase_auth.dart'
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+/**
+ * Name: Seth Frevert
+ * Date: 12/13/2022
+ * Description: Stores the current user and possesses functionality related to firestore auth
+ * Bugs: None that I know of
+ * Reflection: It performs the functions necessary 
+ */
 
-//Quick make of a way to have access to if the user is signed in or not across the app
 class AccountModel extends ChangeNotifier {
   AccountModel() {
     init();

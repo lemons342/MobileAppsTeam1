@@ -1,9 +1,17 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: slash_for_doc_comments
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'account_model.dart';
+
+/**
+ * Name: Seth Frevert
+ * Date: 12/13/2022
+ * Description: The page to display the form to create a new user account
+ * Bugs: None that I know of
+ * Reflection: Beyond some design aspects that could be better, it works
+ */
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key, required this.model}) : super(key: key);
@@ -31,20 +39,6 @@ class _CreateAccountState extends State<CreateAccount> {
       appBar: AppBar(centerTitle: false,
           backgroundColor: Colors.black,
           title: const Text('FreeTime'), //Make this look better
-          actions: [
-            SizedBox( //title bar(top of screen)
-              width: 200,
-              child: Image.asset(
-                'assets/bbbs_logo.png',
-              ),
-            ),
-            // const IconButton(
-            //   onPressed: null,
-            //   icon: Icon(Icons.exit_to_app),
-            // ), //button to redirect user to webpage (keep for now)
-            const Icon(Icons
-                .exit_to_app) //Tried to change to IconButton but was invisible
-          ],
           toolbarHeight: 70,),
       body: Center(
           child: Form(
@@ -116,7 +110,6 @@ class _CreateAccountState extends State<CreateAccount> {
       _formKey.currentState!.save();
       try {
         //Attempt to create a new account
-        final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailAddress,
           password: confirmedPassword,
@@ -129,6 +122,10 @@ class _CreateAccountState extends State<CreateAccount> {
         } else if (e.code == 'email-already-in-use') {
           //If the email is already connected to another account
           SnackBar snackBar = const SnackBar(content: Text('The account already exists for that email.'), duration: Duration(milliseconds: 2000),);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }else if (e.code == 'invalid-email') {
+          //If the email is invalid
+          SnackBar snackBar = const SnackBar(content: Text('The email is invalid.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       } 

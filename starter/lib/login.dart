@@ -1,8 +1,17 @@
+// ignore_for_file: slash_for_doc_comments
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'account_model.dart';
 import 'account.dart';
+
+/** Name: Seth Frevert
+* Date: 12/13/2022
+* Description: A page to use to login in users
+* Bugs: None that I know of
+* Reflection: Beyond some design aspects that could be better, it works
+*/
 
 class Login extends StatefulWidget {
   const Login({Key? key, required this.model}) : super(key: key);
@@ -83,14 +92,13 @@ class _LoginState extends State<Login> {
           password: password,
         );
       } on FirebaseAuthException catch (e) {
-        //Use a generic message for slightly more security
-        if (e.code == 'user-not-found') {
-          //If the user isn't found
+        //Use a generic message for slightly more security, to prevent brute force
+        if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-email') {
+          //If the user isn't found, has the wrong password, or has an invalid email
           SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        } else if (e.code == 'wrong-password') {
-          //If the wrong password is used
-          SnackBar snackBar = const SnackBar(content: Text('The entered information is incorrect.'), duration: Duration(milliseconds: 2000),);
+        } else if (e.code == 'user-disabled') { //If the account is disabled
+          SnackBar snackBar = const SnackBar(content: Text('User is disabled.'), duration: Duration(milliseconds: 2000),);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       }

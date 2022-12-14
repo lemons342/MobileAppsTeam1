@@ -1,9 +1,17 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'account_model.dart';
+
+/**
+ * Name: Seth Frevert
+ * Date: 12/13/2022
+ * Description: The page to display the form to create a new user account
+ * Bugs: None that I know of
+ * Reflection:
+ */
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key, required this.model}) : super(key: key);

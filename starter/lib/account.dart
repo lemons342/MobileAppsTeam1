@@ -1,9 +1,17 @@
-// ignore_for_file: avoid_types_as_parameter_names
+// ignore_for_file: avoid_types_as_parameter_names, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'account_model.dart';
+
+/**
+ * Name: Seth Frevert
+ * Date: 12/13/2022
+ * Description: Display user's email and favorite activities 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
 
 class Account extends StatefulWidget {
   const Account({Key? key, required this.model}) : super(key: key);
@@ -14,7 +22,6 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  //Due to current issues with firestore, as of 11/18/2022, has been left unimplemented
   @override
   Widget build(BuildContext context) {
     return Center(

@@ -47,7 +47,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int selectedIndex = 4; //default index to start at homescreen
+  int selectedIndex = 4; //default index to start at login/account
 
   void _handleTap(int index) {
     setState(() {
@@ -132,10 +132,10 @@ class _MyAppState extends State<MyApp> {
                     icon: Icon(Icons.home),
                     label: 'Home Screen'),
                 BottomNavigationBarItem(
-                    tooltip: 'Settings',
+                    tooltip: 'Account',
                     backgroundColor: Colors.black,
                     icon: Icon(Icons.settings),
-                    label: 'Settings'),
+                    label: 'Account'),
               ],
             ),
           ),

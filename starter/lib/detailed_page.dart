@@ -31,7 +31,7 @@ class _DetailedPageState extends State<DetailedPage> {
 
   @override
   Widget build(BuildContext context) {
-    final IconButton button = widget
+    final IconButton addButton = widget
             .withDeleteButton // show add or delete button
         ? IconButton(
             onPressed: () {
@@ -49,7 +49,7 @@ class _DetailedPageState extends State<DetailedPage> {
         title: const Text('Activity Details'),
         backgroundColor: Colors.black,
         actions: [
-          button,
+          addButton,
         ],
       ),
       body: displayBodyWithData(context),

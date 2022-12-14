@@ -11,7 +11,7 @@ import 'firebase_options.dart';
  * Date: 12/13/2022
  * Description: Stores the current user and possesses functionality related to firestore auth
  * Bugs: None that I know of
- * Reflection:
+ * Reflection: It performs the functions necessary 
  */
 
 class AccountModel extends ChangeNotifier {

@@ -17,6 +17,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // list of user's activites (will be changed to pull from user's saved
+  final TextStyle titleStyle =
+      const TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'Montserrat');
+
+  final TextStyle dateStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+
+  final TextStyle descriptionStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 18,);
+  
   @override
   Widget build(BuildContext context) {
     CollectionReference activities =
@@ -37,16 +46,24 @@ class _HomeScreenState extends State<HomeScreen> {
             return Column(
               children: [
                 const Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'SIGNED UP ACTIVITIES:',
+                    'SIGNED UP ACTIVITIES',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
-                        decoration: TextDecoration.underline),
+                        //decoration: TextDecoration.underline
+                        ),
                   ),
                 ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Divider(
+                                color: Color(0xFF00FC87), thickness: 4.0, height: 1.0
+                                ),
+                  ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),

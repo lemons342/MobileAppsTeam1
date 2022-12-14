@@ -28,7 +28,7 @@ class _DetailedPageState extends State<DetailedPage> {
 
   final TextStyle descriptionStyle =
       const TextStyle(fontWeight: FontWeight.normal, fontSize: 20);
-
+      
   @override
   Widget build(BuildContext context) {
     final IconButton addButton = widget
@@ -59,8 +59,14 @@ class _DetailedPageState extends State<DetailedPage> {
   /// widget to display in the main body
   /// only called when there is data received from a future
   Widget displayBodyWithData(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width, // take up 100% of width
+  String image = '';
+  try {
+    image = widget.activity['image'];
+  } catch (e) {
+    print('Error: no image');
+  }
+    
+    return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -70,13 +76,13 @@ class _DetailedPageState extends State<DetailedPage> {
                 style: titleStyle,
                 textAlign: TextAlign.center),
           ),
-          SizedBox(
-            height: 100,
-            child:
-                Text(formatDateString(widget.activity['date']), // activity date
-                    textAlign: TextAlign.center,
-                    style: dateStyle),
-          ),
+          printDate(formatDateString(widget.activity['date'])),
+          const Padding(
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: Divider(
+                            color: Color(0xFF00FC87), thickness: 3.0, height: 1.0
+                            ),
+              ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -87,6 +93,16 @@ class _DetailedPageState extends State<DetailedPage> {
                     widget.activity['description'] ?? '',
                     textAlign: TextAlign.center,
                     style: descriptionStyle),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset(
+                  'assets/$image',
+                  errorBuilder: (context, error, stackTrace) {
+                    print('Error: no image');
+                    return const Padding(padding: EdgeInsets.all(0)); //if image is '', return widget taking up no space
+                  },
+                  ),
               ),
             ],
           ),
@@ -119,5 +135,15 @@ class _DetailedPageState extends State<DetailedPage> {
     DateTime dtDate =
         DateTime(int.parse(year), int.parse(month), int.parse(day));
     return '${months[dtDate.month - 1]} ${dtDate.day}, ${dtDate.year}';
+  }
+
+  Widget printDate (String date) {
+    if (date != '') {
+      return Text(date, // activity date
+              textAlign: TextAlign.center,
+              style: dateStyle);
+    } else {
+      return const Padding(padding: EdgeInsets.all(0)); //if date is '', return widget taking up no space
+    }
   }
 }

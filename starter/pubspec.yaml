@@ -70,11 +70,16 @@ flutter:
   assets:
     - assets/bbbs_logo.png
     - assets/earth_science_club.png
-    - assets/osh_pub_museum.png
+    - assets/oshkosh_museum.jpg
     - assets/paine.png
     - assets/airventure.jpg
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+    - assets/eaa_museum.png
+    - assets/escape.jpg
+    - assets/glow_in_the_park.jpg
+    - assets/fishing.jpg
+    - assets/menominee_zoo.jpg
+    - assets/paine_nutcracker.jpg
+    - assets/park.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

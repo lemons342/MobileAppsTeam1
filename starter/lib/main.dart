@@ -113,10 +113,10 @@ class _MyAppState extends State<MyApp> {
                     icon: Icon(Icons.calendar_month),
                     label: 'Calendar'),
                 BottomNavigationBarItem(
-                    tooltip: 'Home Screen',
+                    tooltip: 'Your Activities',
                     backgroundColor: Colors.black,
-                    icon: Icon(Icons.home),
-                    label: 'Home Screen'),
+                    icon: Icon(Icons.format_list_bulleted),
+                    label: 'Your Activities'),
                 BottomNavigationBarItem(
                     tooltip: 'Account',
                     backgroundColor: Colors.black,

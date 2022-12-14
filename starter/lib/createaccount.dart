@@ -16,6 +16,8 @@ import 'account_model.dart';
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key, required this.model}) : super(key: key);
   final AccountModel model;
+  final TextStyle titleStyle = const TextStyle(
+    fontSize: 25, fontWeight: FontWeight.bold, letterSpacing: 2);
 
   @override
   State<CreateAccount> createState() => _CreateAccountState();
@@ -36,10 +38,22 @@ class _CreateAccountState extends State<CreateAccount> {
     }
     //Otherwise present the form
     return Scaffold(
-      appBar: AppBar(centerTitle: false,
-          backgroundColor: Colors.black,
-          title: const Text('FreeTime'), //Make this look better
-          toolbarHeight: 70,),
+      appBar: AppBar(
+              centerTitle: true,
+              backgroundColor: Colors.black,
+              title:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox.square(
+                        dimension: 50,
+                        child: Image.asset('assets/freetime_logo.png'), //Logo image
+                        ),
+                      Text('FreeTime', style: widget.titleStyle), //FreeTime title
+                    ],
+                  ), 
+              toolbarHeight: 70,
+            ),
       body: Center(
           child: Form(
               key: _formKey,

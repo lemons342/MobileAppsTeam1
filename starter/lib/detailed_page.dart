@@ -6,13 +6,15 @@ import 'utils.dart';
 class DetailedPage extends StatefulWidget {
   final QueryDocumentSnapshot activity;
   final bool withDeleteButton;
+  final bool withRemoveButton;
   final AccountModel model;
 
   const DetailedPage(
       {Key? key,
       required this.model,
       required this.activity,
-      required this.withDeleteButton})
+      required this.withDeleteButton,
+      required this.withRemoveButton})
       : super(key: key);
 
   @override
@@ -43,6 +45,18 @@ class _DetailedPageState extends State<DetailedPage> {
               addUserToActivity(context, widget.model, widget.activity);
             },
             icon: const Icon(Icons.add));
+    final IconButton favoriteButton = widget
+            .withRemoveButton // show add or delete button
+        ? IconButton(
+            onPressed: () {
+              removeFavoriteUserFromActivity(context, widget.model, widget.activity);
+            },
+            icon: const Icon(Icons.remove))
+        : IconButton(
+            onPressed: () {
+              addFavoriteUserFromActivity(context, widget.model, widget.activity);
+            },
+            icon: const Icon(Icons.favorite));
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -50,6 +64,7 @@ class _DetailedPageState extends State<DetailedPage> {
         backgroundColor: Colors.black,
         actions: [
           addButton,
+          favoriteButton
         ],
       ),
       body: displayBodyWithData(context),

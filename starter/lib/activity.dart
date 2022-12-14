@@ -95,7 +95,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         return ListTile(
                           onTap: () => showDetailedInfo(
                               widget.model, context, currentActivity,
-                              isSignedUp: false),
+                              isSignedUp: false, isFavoritied: false),
                           title: Text(
                             currentActivity['title'], // activity title
                             style: titleStyle,

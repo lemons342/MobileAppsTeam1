@@ -82,7 +82,7 @@ class _CalendarState extends State<Calendar> {
                       return ListTile(
                         onTap: () => showDetailedInfo(
                             widget.model, context, currentActivity,
-                            isSignedUp: true),
+                            isSignedUp: true, isFavoritied: false),
                         title: Text(currentActivity['title']),
                       );
                     },

@@ -12,13 +12,14 @@ Future<QuerySnapshot<Map<String, dynamic>>> getAllActivities() {
 /// creates a new route to display the details page of the clicked on activity
 void showDetailedInfo(
     AccountModel model, BuildContext context, currentActivity, // update type
-    {required bool isSignedUp}) {
+    {required bool isSignedUp, required bool isFavoritied}) {
   Navigator.of(context).push(
     MaterialPageRoute(
         builder: (context) => DetailedPage(
               model: model,
               activity: currentActivity,
               withDeleteButton: isSignedUp,
+              withRemoveButton: isFavoritied,
             )),
   );
 }
@@ -59,6 +60,56 @@ void removeUserFromActivity(BuildContext context, AccountModel model,
   activityFromDB.get().then((value) {
     db.doc(selectedActivity['title']).update({
       'signedUp': FieldValue.arrayRemove([userEmail]),
+    }).then((value) {
+      var snackBar = SnackBar(
+        content: const Text('Successfully removed!'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () => addUserToActivity(context, model, selectedActivity),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+  });
+}
+
+
+/// signs the user up for the activity
+void addFavoriteUserFromActivity(BuildContext context, AccountModel model,
+    QueryDocumentSnapshot selectedActivity) {
+  var userEmail = model.GetUserEmail();
+  final db = FirebaseFirestore.instance.collection('activities');
+  final activityFromDB =
+      db.where('title', isEqualTo: selectedActivity['title']);
+
+  activityFromDB.get().then((value) {
+    db.doc(selectedActivity['title']).update({
+      'favorited': FieldValue.arrayUnion([userEmail]),
+    }).then((value) {
+      var snackBar = SnackBar(
+        content: const Text('Successfully added!'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () =>
+              removeUserFromActivity(context, model, selectedActivity),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+  });
+}
+
+/// removes the user from the activity
+void removeFavoriteUserFromActivity(BuildContext context, AccountModel model,
+    QueryDocumentSnapshot selectedActivity) {
+  var userEmail = model.GetUserEmail();
+  final db = FirebaseFirestore.instance.collection('activities');
+  final activityFromDB =
+      db.where('title', isEqualTo: selectedActivity['title']);
+
+  activityFromDB.get().then((value) {
+    db.doc(selectedActivity['title']).update({
+      'favorited': FieldValue.arrayRemove([userEmail]),
     }).then((value) {
       var snackBar = SnackBar(
         content: const Text('Successfully removed!'),

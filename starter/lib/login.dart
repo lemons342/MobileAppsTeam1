@@ -39,15 +39,19 @@ class _LoginState extends State<Login> {
         child: Form(
             key: _formKey,
             child: Column(children: [
-              TextFormField(
+              Padding(
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              child: TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Email',
                 ),
                 validator: (text) =>
                     text!.isEmpty ? 'An email must be entered' : null, //Attempt to validate if something was entered
                 onSaved: (text) => emailAddress = text!,
-              ),
-              TextFormField(
+              ),),
+              Padding(
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              child: TextFormField(
                 obscureText: true,
                 enableSuggestions: false,
                 autocorrect: false,
@@ -58,7 +62,7 @@ class _LoginState extends State<Login> {
                     ? 'A password must be entered'
                     : null,
                 onSaved: (text) => password = text!,
-              ),
+              ),),
               SizedBox(
                 width: 150,
                 child: ElevatedButton(

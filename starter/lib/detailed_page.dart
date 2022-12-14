@@ -60,12 +60,12 @@ class _DetailedPageState extends State<DetailedPage> {
             onPressed: () {
               removeUserFavorite(context, widget.model, widget.activity);
             },
-            icon: const Icon(Icons.favorite))
+            icon: const Icon(Icons.favorite, color: Colors.white))
         : IconButton(
             onPressed: () {
               favoriteActivity(context, widget.model, widget.activity);
             },
-            icon: const Icon(Icons.favorite));
+            icon: const Icon(Icons.favorite, color: Color(0xFF00FC87)));
             
     return Scaffold(
       appBar: AppBar(

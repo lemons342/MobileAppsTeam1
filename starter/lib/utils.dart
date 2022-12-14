@@ -30,22 +30,27 @@ void signUpForActivity(BuildContext context, AccountModel model,
   final db = FirebaseFirestore.instance.collection('activities');
   final activityFromDB =
       db.where('title', isEqualTo: selectedActivity['title']);
-
-  activityFromDB.get().then((value) {
-    db.doc(selectedActivity['title']).update({
-      'signedUp': FieldValue.arrayUnion([userEmail]),
-    }).then((value) {
-      var snackBar = SnackBar(
-        content: const Text('Successfully signed up!'),
-        action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () =>
-              removeUserFromSignup(context, model, selectedActivity),
-        ),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  if (model.loggedIn) {
+    activityFromDB.get().then((value) {
+      db.doc(selectedActivity['title']).update({
+        'signedUp': FieldValue.arrayUnion([userEmail]),
+      }).then((value) {
+        var snackBar = SnackBar(
+          content: const Text('Successfully signed up!'),
+          action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () =>
+                removeUserFromSignup(context, model, selectedActivity),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
     });
-  });
+  } else {
+    var snackBar = const SnackBar(content: Text('Please login to add activity'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
 }
 
 /// removes the user from the activity signup
@@ -79,22 +84,26 @@ void favoriteActivity(BuildContext context, AccountModel model,
   final db = FirebaseFirestore.instance.collection('activities');
   final activityFromDB =
       db.where('title', isEqualTo: selectedActivity['title']);
-
-  activityFromDB.get().then((value) {
-    db.doc(selectedActivity['title']).update({
-      'favorited': FieldValue.arrayUnion([userEmail]),
-    }).then((value) {
-      var snackBar = SnackBar(
-        content: const Text('Favorited Activity'),
-        action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () =>
-              removeUserFromSignup(context, model, selectedActivity),
-        ),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  if (model.loggedIn) {
+    activityFromDB.get().then((value) {
+      db.doc(selectedActivity['title']).update({
+        'favorited': FieldValue.arrayUnion([userEmail]),
+      }).then((value) {
+        var snackBar = SnackBar(
+          content: const Text('Favorited Activity'),
+          action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () =>
+                removeUserFromSignup(context, model, selectedActivity),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
     });
-  });
+  } else {
+    var snackBar = const SnackBar(content: Text('Please login to favorite an activity'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }
 
 /// removes the user from the activity signup
@@ -105,18 +114,20 @@ void removeUserFavorite(BuildContext context, AccountModel model,
   final activityFromDB =
       db.where('title', isEqualTo: selectedActivity['title']);
 
-  activityFromDB.get().then((value) {
-    db.doc(selectedActivity['title']).update({
-      'favorited': FieldValue.arrayRemove([userEmail]),
-    }).then((value) {
-      var snackBar = SnackBar(
-        content: const Text('Removed Favorite'),
-        action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () => signUpForActivity(context, model, selectedActivity),
-        ),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  if (model.loggedIn) {
+    activityFromDB.get().then((value) {
+      db.doc(selectedActivity['title']).update({
+        'favorited': FieldValue.arrayRemove([userEmail]),
+      }).then((value) {
+        var snackBar = SnackBar(
+          content: const Text('Removed Favorite'),
+          action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () => signUpForActivity(context, model, selectedActivity),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
     });
-  });
+  }
 }

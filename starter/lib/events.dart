@@ -3,31 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils.dart';
 import 'account_model.dart';
 
-/// Activity class that stores a title and possible image, description, and date
-class Activity {
-  Image? image;
-  String title;
-  String? description;
-  DateTime? date;
-
-  /// Activity constructor
-  Activity({required this.title, this.description, this.image, this.date});
-
-  @override
-  String toString() {
-    return '$title, $description, $date';
-  }
-
-  /// returns the date in the format MM/DD/YYYY
-  String getDateAsString() {
-    //used in calendar
-    String dateAsString = date.toString();
-    return date == null
-        ? ''
-        : '${dateAsString.substring(5, 7)}/${dateAsString.substring(8, 10)}/${dateAsString.substring(0, 4)}';
-  }
-}
-
 Widget printDate(String date, TextStyle style) { //Sets print layour of date in ListTile
   String monthDay = date.substring(5,10);
   String year = date.substring(0,4);
@@ -55,13 +30,13 @@ class EventScreen extends StatefulWidget {
 
 class _EventScreenState extends State<EventScreen> {
   final TextStyle titleStyle =
-      const TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'Montserrat');
+      const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'Montserrat');
 
   final TextStyle dateStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 16,);
 
   final TextStyle descriptionStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 16,);
   
   @override
   Widget build(BuildContext context) {
@@ -108,11 +83,11 @@ class _EventScreenState extends State<EventScreen> {
                         var currentActivity =
                             currentActivities[index]; // the map stored in a QDS
                         return ListTile(
-                          onTap: () => showDetailedInfo(
-                              widget.model, context, currentActivity,
-                              isSignedUp: false, 
+                          //onTap: () => showDetailedInfo(
+                          //    widget.model, context, currentActivity,
+                          //    isSignedUp: false, 
                               //isFavoritied: false
-                              ),
+                          //    ),
                           title: Text(
                             currentActivity['title'], // activity title
                             style: titleStyle,
@@ -126,6 +101,13 @@ class _EventScreenState extends State<EventScreen> {
                             currentActivity['description'], // activity title
                             style: descriptionStyle,
                             maxLines: 2,
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.chevron_right),
+                            onPressed: () => showDetailedInfo(
+                              widget.model, context, currentActivity,
+                              isSignedUp: false
+                            ),
                           ),
                         );
                       },

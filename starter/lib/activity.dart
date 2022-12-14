@@ -39,13 +39,13 @@ class ActivityScreen extends StatefulWidget {
 
 class _ActivityScreenState extends State<ActivityScreen> {
   final TextStyle titleStyle =
-      const TextStyle(fontWeight: FontWeight.bold, fontSize: 23,);
+      const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Montserrat');
 
   final TextStyle dateStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 18,);
 
   final TextStyle descriptionStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 18,);
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 16,);
   
   @override
   Widget build(BuildContext context) {
@@ -92,11 +92,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         var currentActivity =
                             currentActivities[index]; // the map stored in a QDS
                         return ListTile(
-                          onTap: () => showDetailedInfo(
-                              widget.model, context, currentActivity,
-                              isSignedUp: false, 
-                              //isFavoritied: false
-                              ),
                           title: Text(
                             currentActivity['title'], // activity title
                             style: titleStyle,
@@ -106,6 +101,12 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             style: descriptionStyle,
                             maxLines: 2,
                             ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.chevron_right),
+                            onPressed: () => showDetailedInfo(
+                                widget.model, context, currentActivity,
+                                isSignedUp: false),
+                          ),
                         );
                       },
                       separatorBuilder: (context, index) {

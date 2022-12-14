@@ -26,6 +26,27 @@ class _CalendarState extends State<Calendar> {
   DateTime? _firstDay;
   DateTime? _lastDay;
 
+  //Map<DateTime, List<Activity>> activities = {};
+
+  final headerStyle = const HeaderStyle(
+    titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0, color: Colors.white),
+    decoration: BoxDecoration(color: Colors.black),
+    leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
+    rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
+    formatButtonTextStyle: TextStyle(fontWeight: FontWeight.bold),
+    formatButtonDecoration: BoxDecoration(color: Color(0xFF00FC87), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+  );
+
+  final calendarStyle = const CalendarStyle(
+    tablePadding: EdgeInsets.fromLTRB(0.2, 15, 0.2, 10),
+    markerSize: 5,
+    markerMargin: EdgeInsets.symmetric(horizontal: 0.5),
+    selectedTextStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+    selectedDecoration: BoxDecoration(color: Color(0xFF00FC87), shape: BoxShape.circle),
+    todayTextStyle: TextStyle(color: Colors.black),
+    todayDecoration: BoxDecoration(color: Color.fromARGB(100, 0, 252, 134), shape: BoxShape.circle),
+  );
+
   final TextStyle titleStyle =
       const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Montserrat');
 
@@ -65,6 +86,8 @@ class _CalendarState extends State<Calendar> {
               _focusedDay = focusedDay;
             });
           },
+          calendarStyle: calendarStyle,
+          headerStyle: headerStyle,
           // eventLoader: (day) => _getEventsForDayForDisplay(day),
         ),
         divider,
@@ -87,14 +110,19 @@ class _CalendarState extends State<Calendar> {
                       var currentActivity =
                           currentActivities[index]; // the map stored in a QDS
                       return ListTile(
-                        onTap: () => showDetailedInfo(
-                            widget.model, context, currentActivity,
-                            isSignedUp: true),
+                        //onTap: () => showDetailedInfo(
+                        //    widget.model, context, currentActivity,
+                        //    isSignedUp: true),
                         title: Text(currentActivity['title'], style: titleStyle),
                         subtitle: Text(
                           currentActivity['description'], // activity title
                           style: descriptionStyle,
                           maxLines: 2,
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.chevron_right),
+                          onPressed: () => showDetailedInfo(
+                            widget.model, context, currentActivity, isSignedUp: false),
                         ),
                       );
                     },

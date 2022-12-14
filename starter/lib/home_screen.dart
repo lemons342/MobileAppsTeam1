@@ -115,13 +115,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         var currentActivity =
                             currentActivities[index]; // the map stored in a QDS
                         return ListTile(
-                          onTap: () => showDetailedInfo(
-                              widget.model, context, currentActivity,
-                              isSignedUp: true, 
-                              //isFavoritied: false
-                              ),
                           title: Text(currentActivity['title']),
                           subtitle: Text(currentActivity['date']),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.chevron_right),
+                            onPressed: () => showDetailedInfo(
+                                widget.model, context, currentActivity,
+                                isSignedUp: true),
+                          ),
                         );
                       },
                       separatorBuilder: (context, index) {

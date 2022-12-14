@@ -61,7 +61,7 @@ class _EventScreenState extends State<EventScreen> {
       const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
 
   final TextStyle descriptionStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 18,);
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
   
   @override
   Widget build(BuildContext context) {

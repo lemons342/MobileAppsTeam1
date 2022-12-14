@@ -43,6 +43,7 @@ dependencies:
   provider: ^6.0.3
   intl: ^0.17.0
   google_fonts: ^3.0.1
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/freetime_logo.png
     - assets/bbbs_logo.png
     - assets/earth_science_club.png
     - assets/oshkosh_museum.jpg
@@ -80,6 +82,11 @@ flutter:
     - assets/menominee_zoo.jpg
     - assets/paine_nutcracker.jpg
     - assets/park.jpg
+    - assets/celebration_of_lights.jpg
+    - assets/harlem_globe_trotters.jpg
+    - assets/axe_throwing.jpg
+    - assets/movie_theater.jpg
+    - assets/winter_farmers_market.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

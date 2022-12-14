@@ -14,30 +14,55 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  //Due to current issues with firestore, as of 11/18/2022, has been left unimplemented
+  final TextStyle titleStyle =
+      const TextStyle(fontWeight: FontWeight.bold, fontSize: 23,);
+
+  final TextStyle dateStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+
+  final TextStyle descriptionStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 18,);
+      
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Padding(
-      padding: const EdgeInsets.all(20.0),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
+        children: [
           //Will display the email of the user
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text('Email: ${widget.model.GetUserEmail()}',
-                  style: const TextStyle(fontSize: 18.0)),
-            ],
+          Container(
+            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Text('Account:   ${widget.model.GetUserEmail()}',
+                    style: const TextStyle(fontSize: 18.0)),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center, 
+                  crossAxisAlignment: CrossAxisAlignment.center, 
+                  children: [
+                    ElevatedButton(
+                      onPressed: _logout,
+                      style: ElevatedButton.styleFrom(foregroundColor: Colors.black, backgroundColor: const Color(0xFF00FC87)), 
+                      child: const Text('Logout'),
+                      )
+                  ],
+                ),
+              ],
+            ),
           ),
           //Will list the favorite activites entered or selected by the user
           Column(
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: const [
-                Text('Favorited Activites', style: TextStyle(fontSize: 18.0))
-              ]),
+              Text('Favorited Activites', style: titleStyle),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Divider(
+                              color: Color(0xFF00FC87), thickness: 4.0, height: 1.0
+                              ),
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -48,15 +73,15 @@ class _AccountState extends State<Account> {
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Center(child: Text('Waiting'));
+                          return const Center(child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
                           return const Center(child: Text('Error'));
                         } else if (snapshot.hasData) {
                           List<QueryDocumentSnapshot> activities =
                               snapshot.data!.docs;
                           return SizedBox(
-                              height: 100.0,
-                              width: 250.0,
+                              height: 400.0,
+                              width: 350.0,
                               child: ListView.separated(
                                   itemCount: snapshot.data!.size,
                                   itemBuilder: (context, index) {
@@ -67,7 +92,7 @@ class _AccountState extends State<Account> {
                                   },
                                   separatorBuilder: (context, int) =>
                                       const Divider(
-                                          color: Colors.black,
+                                          color: Colors.grey,
                                           thickness: 1.0,
                                           height: 1.0)));
                         } else {
@@ -77,19 +102,11 @@ class _AccountState extends State<Account> {
                       })
                 ],
               ),
-              Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center, 
-                crossAxisAlignment: CrossAxisAlignment.center, 
-                children: [
-                  ElevatedButton(onPressed: _logout, child: const Text('Logout'))
-              ],)
-            )
             ],
           ),
         ],
       ),
-    ));
+    );
   }
 
   

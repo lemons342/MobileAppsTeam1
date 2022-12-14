@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils.dart';
 import 'account_model.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Activity class that stores a title and possible image, description, and date
 class Activity {
@@ -40,7 +39,7 @@ class ActivityScreen extends StatefulWidget {
 
 class _ActivityScreenState extends State<ActivityScreen> {
   final TextStyle titleStyle =
-      const TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'Montserrat');
+      const TextStyle(fontWeight: FontWeight.bold, fontSize: 23,);
 
   final TextStyle dateStyle =
       const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);

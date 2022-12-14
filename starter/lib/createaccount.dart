@@ -84,6 +84,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
                 ElevatedButton(
                     onPressed: _createAccount,
+                    style: ElevatedButton.styleFrom(foregroundColor: Colors.black, backgroundColor: const Color(0xFF00FC87)),
                     child: const Text('Create Account'))
               ]))),
     );

@@ -50,12 +50,24 @@ class _LoginState extends State<Login> {
                     : null,
                 onSaved: (text) => password = text!,
               ),
-              ElevatedButton(
-                  onPressed: _login,
-                  child: const Text('Login')),
-              ElevatedButton(
-                  onPressed: _register,
-                  child: const Text('Create Account')),
+              SizedBox(
+                width: 150,
+                child: ElevatedButton(
+                    onPressed: _login,
+                    style: ElevatedButton.styleFrom(foregroundColor: Colors.black, backgroundColor: const Color(0xFF00FC87)),
+                    child: const Text('Login')),
+              ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Text('Don\'t have an account?'),
+              ),
+              SizedBox(
+                width: 150,
+                child: ElevatedButton(
+                    onPressed: _register,
+                    style: ElevatedButton.styleFrom(foregroundColor: Colors.black, backgroundColor: const Color(0xFF00FC87)),
+                    child: const Text('Create Account')),
+              ),
             ])));
   }
 

@@ -31,25 +31,49 @@ class _DetailedPageState extends State<DetailedPage> {
       
   @override
   Widget build(BuildContext context) {
-    final IconButton button = widget
+    final OutlinedButton signUpButton = widget
+            .withDeleteButton // show add or delete signUpButton
+        ? OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(color: Colors.white, width: 1), 
+            ),
+            onPressed: () {
+              removeUserFromSignup(context, widget.model, widget.activity);
+            },
+            child: const Text('Remove', style: TextStyle(color: Colors.white)))
+        : OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(color: Colors.white, width: 1), 
+            ),
+            onPressed: () {
+              signUpForActivity(context, widget.model, widget.activity);
+            },
+            child: const Text('Sign Up', style: TextStyle(color: Colors.white)));
+
+    final IconButton favoriteButton = widget
             .withDeleteButton // show add or delete button
         ? IconButton(
             onPressed: () {
-              removeUserFromActivity(context, widget.model, widget.activity);
+              removeUserFavorite(context, widget.model, widget.activity);
             },
-            icon: const Icon(Icons.clear))
+            icon: const Icon(Icons.favorite))
         : IconButton(
             onPressed: () {
-              addUserToActivity(context, widget.model, widget.activity);
+              favoriteActivity(context, widget.model, widget.activity);
             },
-            icon: const Icon(Icons.add));
+            icon: const Icon(Icons.favorite));
+            
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
         title: const Text('Activity Details'),
         backgroundColor: Colors.black,
         actions: [
-          button,
+          favoriteButton,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 8, 10, 8),
+            child: signUpButton,
+          ),
         ],
       ),
       body: displayBodyWithData(context),

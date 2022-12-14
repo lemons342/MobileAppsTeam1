@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'dart:async';
 // import 'activity.dart';
 import 'utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'account_model.dart';
 
@@ -16,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // list of user's activites (will be changed to pull from user's saved
   final TextStyle titleStyle =
       const TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'Montserrat');
 
@@ -45,6 +45,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 snapshot.data!.docs; // all docs
             return Column(
               children: [
+                const Divider(
+                            color: Colors.grey, thickness: 1.0, height: 1.0),
+                DecoratedBox(
+                  //title bar(top of screen)
+                  decoration: const BoxDecoration(
+                    color: Colors.black
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Image.asset(
+                              'assets/bbbs_logo.png',
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                        child: Text(
+                          "Big Brothers Big Sisters helps children realize their potential and build their futures. We nurture children and strengthen communities. And we couldn't do any of it without you.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 200, 200, 200),
+                          ),
+                          ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          onPressed: _launchUrl, 
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor: const Color(0xFF00FC87),
+                          ),
+                          child: const Text('Learn More')
+                          ),
+                      )
+                    ],
+                  ),
+                ),
                 const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
@@ -95,6 +137,14 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         });
   }
+  
+  Future<void> _launchUrl() async {
+  final Uri url = Uri.parse('https://www.bbbs.org/about-us/');
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
+  }
+
 
   //unused function
   // Future<QuerySnapshot> _getActivities() async {

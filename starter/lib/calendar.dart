@@ -26,7 +26,14 @@ class _CalendarState extends State<Calendar> {
   DateTime? _firstDay;
   DateTime? _lastDay;
 
-  // List<Activity> activities = [];
+  final TextStyle titleStyle =
+      const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Montserrat');
+
+  final TextStyle dateStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+
+  final TextStyle descriptionStyle =
+      const TextStyle(fontWeight: FontWeight.normal, fontSize: 14,);
 
   /// Imported calendar widget from api
   @override
@@ -83,7 +90,12 @@ class _CalendarState extends State<Calendar> {
                         onTap: () => showDetailedInfo(
                             widget.model, context, currentActivity,
                             isSignedUp: true),
-                        title: Text(currentActivity['title']),
+                        title: Text(currentActivity['title'], style: titleStyle),
+                        subtitle: Text(
+                          currentActivity['description'], // activity title
+                          style: descriptionStyle,
+                          maxLines: 2,
+                        ),
                       );
                     },
                     separatorBuilder: (context, index) {

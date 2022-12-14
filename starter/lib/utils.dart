@@ -24,7 +24,7 @@ void showDetailedInfo(
 }
 
 /// signs the user up for the activity
-void addUserToActivity(BuildContext context, AccountModel model,
+void signUpForActivity(BuildContext context, AccountModel model,
     QueryDocumentSnapshot selectedActivity) {
   var userEmail = model.GetUserEmail();
   final db = FirebaseFirestore.instance.collection('activities');
@@ -36,11 +36,11 @@ void addUserToActivity(BuildContext context, AccountModel model,
       'signedUp': FieldValue.arrayUnion([userEmail]),
     }).then((value) {
       var snackBar = SnackBar(
-        content: const Text('Successfully added!'),
+        content: const Text('Successfully signed up!'),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () =>
-              removeUserFromActivity(context, model, selectedActivity),
+              removeUserFromSignup(context, model, selectedActivity),
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -48,8 +48,8 @@ void addUserToActivity(BuildContext context, AccountModel model,
   });
 }
 
-/// removes the user from the activity
-void removeUserFromActivity(BuildContext context, AccountModel model,
+/// removes the user from the activity signup
+void removeUserFromSignup(BuildContext context, AccountModel model,
     QueryDocumentSnapshot selectedActivity) {
   var userEmail = model.GetUserEmail();
   final db = FirebaseFirestore.instance.collection('activities');
@@ -61,10 +61,59 @@ void removeUserFromActivity(BuildContext context, AccountModel model,
       'signedUp': FieldValue.arrayRemove([userEmail]),
     }).then((value) {
       var snackBar = SnackBar(
-        content: const Text('Successfully removed!'),
+        content: const Text('Successfully removed.'),
         action: SnackBarAction(
           label: 'Undo',
-          onPressed: () => addUserToActivity(context, model, selectedActivity),
+          onPressed: () => signUpForActivity(context, model, selectedActivity),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+  });
+}
+
+/// signs the user up for the activity
+void favoriteActivity(BuildContext context, AccountModel model,
+    QueryDocumentSnapshot selectedActivity) {
+  var userEmail = model.GetUserEmail();
+  final db = FirebaseFirestore.instance.collection('activities');
+  final activityFromDB =
+      db.where('title', isEqualTo: selectedActivity['title']);
+
+  activityFromDB.get().then((value) {
+    db.doc(selectedActivity['title']).update({
+      'favorited': FieldValue.arrayUnion([userEmail]),
+    }).then((value) {
+      var snackBar = SnackBar(
+        content: const Text('Favorited Activity'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () =>
+              removeUserFromSignup(context, model, selectedActivity),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+  });
+}
+
+/// removes the user from the activity signup
+void removeUserFavorite(BuildContext context, AccountModel model,
+    QueryDocumentSnapshot selectedActivity) {
+  var userEmail = model.GetUserEmail();
+  final db = FirebaseFirestore.instance.collection('activities');
+  final activityFromDB =
+      db.where('title', isEqualTo: selectedActivity['title']);
+
+  activityFromDB.get().then((value) {
+    db.doc(selectedActivity['title']).update({
+      'favorited': FieldValue.arrayRemove([userEmail]),
+    }).then((value) {
+      var snackBar = SnackBar(
+        content: const Text('Removed Favorite'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () => signUpForActivity(context, model, selectedActivity),
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

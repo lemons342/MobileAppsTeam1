@@ -62,8 +62,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Consumer<AccountModel>(
       builder: (context, model, child) {
-        List<Widget> tabViews = [
-          //list of calls to screens
+        List<Widget> tabViews = [   //list of calls to screens
           ActivityScreen(model: model),
           EventScreen(model: model),
           Calendar(model: model),
@@ -79,26 +78,19 @@ class _MyAppState extends State<MyApp> {
           length: 4,
           child: Scaffold(
             appBar: AppBar(
-              centerTitle: false,
+              centerTitle: true,
               backgroundColor: Colors.black,
               title:
-                  Text('FreeTime', style: titleStyle), //Make this look better
-              actions: [
-                SizedBox(
-                  //title bar(top of screen)
-                  width: 200,
-                  child: Image.asset(
-                    'assets/bbbs_logo.png',
-                  ),
-                ),
-                //const IconButton(
-                //  color: Colors.white,
-                //  onPressed: null,
-                //  icon: Icon(Icons.exit_to_app),
-                //), //button to redirect user to webpage (keep for now)
-                const Icon(Icons
-                    .exit_to_app) //Tried to change to IconButton but was invisible
-              ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox.square(
+                        dimension: 50,
+                        child: Image.asset('assets/freetime_logo.png'), //Logo image
+                        ),
+                      Text('FreeTime', style: titleStyle), //FreeTime title
+                    ],
+                  ), 
               toolbarHeight: 70,
             ),
             body: tabViews[selectedIndex], //call to view depending on index
@@ -110,7 +102,6 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: Colors.black,
               onTap: _handleTap,
               items: const [
-                //*** temporary tabs for login and create account
                 BottomNavigationBarItem(
                     tooltip: 'Activities',
                     backgroundColor: Colors.black,

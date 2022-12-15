@@ -38,22 +38,28 @@ class ActivityScreen extends StatefulWidget {
 }
 
 class _ActivityScreenState extends State<ActivityScreen> {
-  final TextStyle titleStyle =
-      const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Montserrat');
+  final TextStyle titleStyle = const TextStyle(
+      fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Montserrat');
 
-  final TextStyle dateStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 18,);
+  final TextStyle dateStyle = const TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 18,
+  );
 
-  final TextStyle descriptionStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 16,);
-  
+  final TextStyle descriptionStyle = const TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 16,
+  );
+
   @override
   Widget build(BuildContext context) {
     CollectionReference activities =
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
-        future: activities.where('date', isEqualTo: '').get(), //calling all activities from Firebase
+        future: activities
+            .where('date', isEqualTo: '')
+            .get(), //calling all activities from Firebase
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -70,19 +76,18 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     'ACTIVITIES',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                        //decoration: TextDecoration.underline
-                        ),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                      //decoration: TextDecoration.underline
+                    ),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Divider(
-                                color: Color(0xFF00FC87), thickness: 4.0, height: 1.0
-                                ),
-                  ),
+                  child: Divider(
+                      color: Color(0xFF00FC87), thickness: 4.0, height: 1.0),
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -100,7 +105,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             currentActivity['description'], // activity title
                             style: descriptionStyle,
                             maxLines: 2,
-                            ),
+                          ),
                           trailing: IconButton(
                             icon: const Icon(Icons.chevron_right),
                             onPressed: () => showDetailedInfo(

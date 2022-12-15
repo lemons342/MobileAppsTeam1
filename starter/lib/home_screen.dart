@@ -17,15 +17,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextStyle titleStyle =
-      const TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'Montserrat');
+  final TextStyle titleStyle = const TextStyle(
+      fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'Montserrat');
 
-  final TextStyle dateStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+  final TextStyle dateStyle = const TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 20,
+  );
 
-  final TextStyle descriptionStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 18,);
-  
+  final TextStyle descriptionStyle = const TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 18,
+  );
+
   @override
   Widget build(BuildContext context) {
     CollectionReference activities =
@@ -45,13 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 snapshot.data!.docs; // all docs
             return Column(
               children: [
-                const Divider(
-                            color: Colors.grey, thickness: 1.0, height: 1.0),
+                const Divider(color: Colors.grey, thickness: 1.0, height: 1.0),
                 DecoratedBox(
                   //title bar(top of screen)
-                  decoration: const BoxDecoration(
-                    color: Colors.black
-                  ),
+                  decoration: const BoxDecoration(color: Colors.black),
                   child: Column(
                     children: [
                       Row(
@@ -71,18 +72,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                             color: Color.fromARGB(255, 200, 200, 200),
                           ),
-                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextButton(
-                          onPressed: _launchUrl, 
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.black,
-                            backgroundColor: const Color(0xFF00FC87),
-                          ),
-                          child: const Text('Learn More')
-                          ),
+                            onPressed: _launchUrl,
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor: const Color(0xFF00FC87),
+                            ),
+                            child: const Text('Learn More')),
                       )
                     ],
                   ),
@@ -93,19 +93,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     'SIGNED UP ACTIVITIES',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                        //decoration: TextDecoration.underline
-                        ),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                      //decoration: TextDecoration.underline
+                    ),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Divider(
-                                color: Color(0xFF00FC87), thickness: 4.0, height: 1.0
-                                ),
-                  ),
+                  child: Divider(
+                      color: Color(0xFF00FC87), thickness: 4.0, height: 1.0),
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -140,14 +139,13 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         });
   }
-  
+
   Future<void> _launchUrl() async {
-  final Uri url = Uri.parse('https://www.bbbs.org/about-us/');
+    final Uri url = Uri.parse('https://www.bbbs.org/about-us/');
     if (!await launchUrl(url)) {
       throw 'Could not launch $url';
     }
   }
-
 
   //unused function
   // Future<QuerySnapshot> _getActivities() async {

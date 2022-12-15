@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'account_model.dart';
 import 'utils.dart';
 
+/// 
 class DetailedPage extends StatefulWidget {
   final QueryDocumentSnapshot activity;
   final bool withDeleteButton;

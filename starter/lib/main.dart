@@ -92,8 +92,10 @@ class _MyAppState extends State<MyApp> {
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: selectedIndex,
               selectedIconTheme:
-                  const IconThemeData(color: Color(0xFF00FC87), size: 40),
+                  const IconThemeData(color: Color(0xFF00FC87), size: 30),
               unselectedItemColor: Colors.white,
+              //unselectedLabelStyle: TextStyle(overflow: TextOverflow.visible),
+              //showUnselectedLabels: true,
               backgroundColor: Colors.black,
               onTap: _handleTap,
               items: const [

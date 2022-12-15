@@ -110,6 +110,6 @@ class _LoginState extends State<Login> {
   }
 
   void _register(){
-    Navigator.of(context).pushNamed('/register');
+    Navigator.of(context).pushNamed('/register'); //Go to create account page
   }
 }

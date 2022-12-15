@@ -7,11 +7,11 @@ import 'account_model.dart';
 import 'utils.dart';
 
 /**
- * Name: 
- * Date: 12//2022
- * Description: 
+ * Name: Seth Frevert
+ * Date: 12/13/2022
+ * Description: Display user's email and favorite activities 
  * Bugs: None that I know of
- * Reflection: 
+ * Reflection: It performs the necesary functions
  */
 
 class Account extends StatefulWidget {
@@ -95,7 +95,7 @@ class _AccountState extends State<Account> {
                       itemCount: activities.length,
                       itemBuilder: (context, index) {
                         var currentActivity =
-                            activities[index]; // the map stored in a QDS
+                            activities[index]; 
                         return ListTile(
                           title: Text(
                             currentActivity['title'], // activity title
@@ -103,7 +103,7 @@ class _AccountState extends State<Account> {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.chevron_right),
-                            onPressed: () => showDetailedInfo(
+                            onPressed: () => showDetailedInfo( //Open the detailed page for selected activity
                                 widget.model, context, currentActivity,
                                 isSignedUp: false, isFavorited: true),
                           ),
@@ -128,7 +128,7 @@ class _AccountState extends State<Account> {
     );
   }
 
-  
+  //Use the model to logout the user
   void _logout(){
     widget.model.Logout();
   }

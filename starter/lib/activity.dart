@@ -3,15 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils.dart';
 import 'account_model.dart';
 
-/**
- * Name: 
- * Date: 12//2022
- * Description: 
- * Bugs: None that I know of
- * Reflection: 
- */
+/// Name: Stephanie Amundson 
+/// Date: 12/13/2022
+/// Description: Activity object for the app. Each activity has a title, and
+///              and possible image, description, and date 
+/// Bugs: None that I know of
+/// Reflection: Implementing was pretty straightforward
 
-/// Activity class that stores a title and possible image, description, and date
 class Activity {
   Image? image;
   String title;
@@ -35,6 +33,13 @@ class Activity {
         : '${dateAsString.substring(5, 7)}/${dateAsString.substring(8, 10)}/${dateAsString.substring(0, 4)}';
   }
 }
+
+/// Name: 
+/// Date: 12//2022
+/// Description: 
+/// Bugs: None that I know of
+/// Reflection: 
+
 
 class ActivityScreen extends StatefulWidget {
   final AccountModel model;

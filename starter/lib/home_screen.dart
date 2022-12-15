@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'dart:async';
-// import 'activity.dart';
 import 'utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 

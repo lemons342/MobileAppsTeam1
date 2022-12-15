@@ -1,17 +1,16 @@
-// ignore_for_file: avoid_print, slash_for_doc_comments
+// ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'account_model.dart';
 import 'utils.dart';
 
-/**
- * Name: 
- * Date: 12//2022
- * Description: 
- * Bugs: None that I know of
- * Reflection: 
- */
+/// Name: Stephanie Amundson
+/// Date: 12/13/2022
+/// Description: Details page that shows the title, date, description, and
+///              image of an activity
+/// Bugs: None that I know of
+/// Reflection:
 
 class DetailedPage extends StatefulWidget {
   final QueryDocumentSnapshot activity;
@@ -20,13 +19,11 @@ class DetailedPage extends StatefulWidget {
   final AccountModel model;
 
   const DetailedPage(
-        {Key? key,
-        required this.model,
-        required this.activity,
-        required this.withDeleteButton,
-        required this.withRemoveButton
-        }
-      )
+      {Key? key,
+      required this.model,
+      required this.activity,
+      required this.withDeleteButton,
+      required this.withRemoveButton})
       : super(key: key);
 
   @override
@@ -42,41 +39,42 @@ class _DetailedPageState extends State<DetailedPage> {
 
   final TextStyle descriptionStyle =
       const TextStyle(fontWeight: FontWeight.normal, fontSize: 20);
-      
+
+  final outlinedButtonStyle = OutlinedButton.styleFrom(
+    side: const BorderSide(color: Colors.white, width: 1),
+  );
+
   @override
   Widget build(BuildContext context) {
     final OutlinedButton signUpButton = widget
             .withDeleteButton // show add or delete signUpButton
         ? OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.white, width: 1), 
-            ),
+            style: outlinedButtonStyle,
             onPressed: () {
               removeUserFromSignup(context, widget.model, widget.activity);
             },
             child: const Text('Remove', style: TextStyle(color: Colors.white)))
         : OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.white, width: 1), 
-            ),
+            style: outlinedButtonStyle,
             onPressed: () {
               signUpForActivity(context, widget.model, widget.activity);
             },
-            child: const Text('Sign Up', style: TextStyle(color: Colors.white)));
+            child:
+                const Text('Sign Up', style: TextStyle(color: Colors.white)));
 
-    final IconButton favoriteButton = widget
-            .withRemoveButton // show add or delete button
-        ? IconButton(
-            onPressed: () {
-              removeUserFavorite(context, widget.model, widget.activity);
-            },
-            icon: const Icon(Icons.favorite, color: Colors.white))
-        : IconButton(
-            onPressed: () {
-              favoriteActivity(context, widget.model, widget.activity);
-            },
-            icon: const Icon(Icons.favorite, color: Color(0xFF00FC87)));
-            
+    final IconButton favoriteButton =
+        widget.withRemoveButton // show add or delete from favorites button
+            ? IconButton(
+                onPressed: () {
+                  removeUserFavorite(context, widget.model, widget.activity);
+                },
+                icon: const Icon(Icons.favorite, color: Colors.white))
+            : IconButton(
+                onPressed: () {
+                  favoriteActivity(context, widget.model, widget.activity);
+                },
+                icon: const Icon(Icons.favorite, color: Color(0xFF00FC87)));
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -97,37 +95,35 @@ class _DetailedPageState extends State<DetailedPage> {
   /// widget to display in the main body
   /// only called when there is data received from a future
   Widget displayBodyWithData(BuildContext context) {
-  String image = '';
-  try {
-    image = widget.activity['image'];
-  } catch (e) {
-    print('Error: no image');
-  }
-    
+    String image = '';
+    try {
+      image = widget.activity['image'];
+    } catch (e) {
+      print('Error: no image');
+    }
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Text(widget.activity['title'], // activity title
+            child: Text(widget.activity['title'],
                 style: titleStyle,
                 textAlign: TextAlign.center),
           ),
           printDate(formatDateString(widget.activity['date'])),
           const Padding(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: Divider(
-                            color: Color(0xFF00FC87), thickness: 3.0, height: 1.0
-                            ),
-              ),
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child:
+                Divider(color: Color(0xFF00FC87), thickness: 3.0, height: 1.0),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                    // activity description
                     widget.activity['description'] ?? '',
                     textAlign: TextAlign.center,
                     style: descriptionStyle),
@@ -138,9 +134,10 @@ class _DetailedPageState extends State<DetailedPage> {
                   'assets/$image',
                   errorBuilder: (context, error, stackTrace) {
                     print('Error: no image');
-                    return const Padding(padding: EdgeInsets.all(0)); //if image is '', return widget taking up no space
+                    //if image is '', return widget taking up no space
+                    return const Padding(padding: EdgeInsets.all(0));
                   },
-                  ),
+                ),
               ),
             ],
           ),
@@ -149,6 +146,7 @@ class _DetailedPageState extends State<DetailedPage> {
     );
   }
 
+  /// formats YYYY-MM-DD string as monthName day, year
   String formatDateString(String date) {
     if (date.isEmpty) {
       return '';
@@ -175,13 +173,15 @@ class _DetailedPageState extends State<DetailedPage> {
     return '${months[dtDate.month - 1]} ${dtDate.day}, ${dtDate.year}';
   }
 
-  Widget printDate (String date) {
+  /// displays the date for the page
+  Widget printDate(String date) {
     if (date != '') {
       return Text(date, // activity date
-              textAlign: TextAlign.center,
-              style: dateStyle);
+          textAlign: TextAlign.center,
+          style: dateStyle);
     } else {
-      return const Padding(padding: EdgeInsets.all(0)); //if date is '', return widget taking up no space
+      //if date is '', return widget taking up no space
+      return const Padding(padding: EdgeInsets.all(0));
     }
   }
 }

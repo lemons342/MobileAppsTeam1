@@ -1,19 +1,21 @@
-// ignore_for_file: slash_for_doc_comments
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'activity.dart';
+import 'activity.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'utils.dart';
 import 'account_model.dart';
 
-/**
- * Name: 
- * Date: 12//2022
- * Description: 
- * Bugs: None that I know of
- * Reflection: 
- */
+/// Name: Stephanie Amundson
+/// Date: 12/13/2022
+/// Description: Calendar page that uses a calendar widget from pub.dev. The
+///              top half is an interactive calendar and the bottom half is
+///              a list view of all activities for the day selected
+/// Bugs: Marker on a date only shows up if you click on a day. Probably has
+///       something to do with _getEventsForDayForDisplay not getting called
+///       right away/when the page updates.
+/// Reflection: This page was probably the hardest page on the app to complete.
+///             It was hard to get things to work exactly how I wanted them to
+///             but I'm pretty happy with how it turned out.
 
 class Calendar extends StatefulWidget {
   final AccountModel model;
@@ -36,35 +38,45 @@ class _CalendarState extends State<Calendar> {
   DateTime? _firstDay;
   DateTime? _lastDay;
 
-  //Map<DateTime, List<Activity>> activities = {};
+  Map<DateTime, List<Activity>> activities = {};
 
   final headerStyle = const HeaderStyle(
-    titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0, color: Colors.white),
+    titleTextStyle: TextStyle(
+        fontWeight: FontWeight.bold, fontSize: 21.0, color: Colors.white),
     decoration: BoxDecoration(color: Colors.black),
     leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
     rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
     formatButtonTextStyle: TextStyle(fontWeight: FontWeight.bold),
-    formatButtonDecoration: BoxDecoration(color: Color(0xFF00FC87), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+    formatButtonDecoration: BoxDecoration(
+        color: Color(0xFF00FC87),
+        borderRadius: BorderRadius.all(Radius.circular(10.0))),
   );
 
   final calendarStyle = const CalendarStyle(
     tablePadding: EdgeInsets.fromLTRB(0.2, 15, 0.2, 10),
     markerSize: 5,
     markerMargin: EdgeInsets.symmetric(horizontal: 0.5),
-    selectedTextStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-    selectedDecoration: BoxDecoration(color: Color(0xFF00FC87), shape: BoxShape.circle),
+    selectedTextStyle:
+        TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+    selectedDecoration:
+        BoxDecoration(color: Color(0xFF00FC87), shape: BoxShape.circle),
     todayTextStyle: TextStyle(color: Colors.black),
-    todayDecoration: BoxDecoration(color: Color.fromARGB(100, 0, 252, 134), shape: BoxShape.circle),
+    todayDecoration: BoxDecoration(
+        color: Color.fromARGB(100, 0, 252, 134), shape: BoxShape.circle),
   );
 
-  final TextStyle titleStyle =
-      const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Montserrat');
+  final TextStyle titleStyle = const TextStyle(
+      fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Montserrat');
 
-  final TextStyle dateStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 20,);
+  final TextStyle dateStyle = const TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 20,
+  );
 
-  final TextStyle descriptionStyle =
-      const TextStyle(fontWeight: FontWeight.normal, fontSize: 14,);
+  final TextStyle descriptionStyle = const TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 14,
+  );
 
   /// Imported calendar widget from api
   @override
@@ -98,7 +110,10 @@ class _CalendarState extends State<Calendar> {
           },
           calendarStyle: calendarStyle,
           headerStyle: headerStyle,
-          // eventLoader: (day) => _getEventsForDayForDisplay(day),
+          eventLoader: (day) {
+            _getEventsForDayForDisplay(day);
+            return activities[day] ?? [];
+          },
         ),
         divider,
         FutureBuilder(
@@ -120,10 +135,8 @@ class _CalendarState extends State<Calendar> {
                       var currentActivity =
                           currentActivities[index]; // the map stored in a QDS
                       return ListTile(
-                        //onTap: () => showDetailedInfo(
-                        //    widget.model, context, currentActivity,
-                        //    isSignedUp: true),
-                        title: Text(currentActivity['title'], style: titleStyle),
+                        title:
+                            Text(currentActivity['title'], style: titleStyle),
                         subtitle: Text(
                           currentActivity['description'], // activity title
                           style: descriptionStyle,
@@ -132,7 +145,8 @@ class _CalendarState extends State<Calendar> {
                         trailing: IconButton(
                           icon: const Icon(Icons.chevron_right),
                           onPressed: () => showDetailedInfo(
-                            widget.model, context, currentActivity, isSignedUp: false, isFavorited: false),
+                              widget.model, context, currentActivity,
+                              isSignedUp: false, isFavorited: false),
                         ),
                       );
                     },
@@ -154,11 +168,14 @@ class _CalendarState extends State<Calendar> {
   }
 
   /// Configures the starting and ending dates for the calendar range
+  /// (previous 3 months to next 12 months from current date)
   void _configureStartAndEndDates() {
     var today = DateTime.now();
+    // start at 3 months prior to today's date
     _firstDay = DateTime((today.month - 3 < 1) ? today.year - 1 : today.year,
         (today.month - 3) + 12 % 12, 1);
 
+    // ends 12 months after today's date
     _lastDay = (today.month < 12)
         ? DateTime(today.year, today.month + 12, 0)
         : DateTime(today.year + 2, 1, 0);
@@ -166,6 +183,7 @@ class _CalendarState extends State<Calendar> {
 
   /// gets the events for the given [day]
   Future<QuerySnapshot> _getEventsForDay({required DateTime day}) {
+    // make sure the date is formatted correctly for querying
     String date = '${day.year}-';
     if (day.month >= 10) {
       date += '${day.month}-';
@@ -177,6 +195,7 @@ class _CalendarState extends State<Calendar> {
     } else {
       date += '0${day.day}';
     }
+    date = date.substring(0,10);
     return FirebaseFirestore.instance
         .collection('activities')
         .where('date', isEqualTo: date)
@@ -184,22 +203,35 @@ class _CalendarState extends State<Calendar> {
   }
 
   /// Gets the activities for the given [day]
-  // List<Activity> _getEventsForDayForDisplay(DateTime day) {
-  //   // pull activities whose date matches the date in the parameter
-  //   final allActivities = FirebaseFirestore.instance.collection('activities');
-  //   List<Activity> validActivities = [];
-  //   var formattedDay = day.toString().substring(0, 10);
-  //   var query = allActivities.where('date', isEqualTo: formattedDay);
-  //   query.get().then((querySnapshot) {
-  //       for (var doc in querySnapshot.docs) {
-  //       Activity currentActivity = Activity(
-  //           title: doc['title'],
-  //           description: doc['description'],
-  //           date: DateTime.parse(doc['date']));
-  //       validActivities.add(currentActivity);
-  //     }
-  //   });
+  /// (used by the event loader)
+  List<Activity> _getEventsForDayForDisplay(DateTime day) {
+    List<Activity> validActivities = [];
 
-  //   return validActivities;
-  // }
+    var events = _getEventsForDay(day: day);
+
+    events.then((querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        Activity currentActivity = Activity(
+            title: doc['title'],
+            description: doc['description'],
+            date: DateTime.parse(doc['date']));
+        //print(currentActivity.date);
+        validActivities.add(currentActivity);
+      }
+    });
+
+    //for (var doc in events.docs) {
+    //  Activity currentActivity = Activity(
+    //      title: doc['title'],
+    //      description: doc['description'],
+    //      date: DateTime.parse(doc['date']));
+
+    //  validActivities.add(currentActivity);
+    //}
+
+    activities.putIfAbsent(day, () => validActivities);
+    //activities.update(day, (value) => validActivities);
+
+    return validActivities;
+  }
 }

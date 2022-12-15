@@ -93,11 +93,6 @@ class _EventScreenState extends State<EventScreen> {
                         var currentActivity =
                             currentActivities[index]; // the map stored in a QDS
                         return ListTile(
-                          //onTap: () => showDetailedInfo(
-                          //    widget.model, context, currentActivity,
-                          //    isSignedUp: false, 
-                              //isFavoritied: false
-                          //    ),
                           title: Text(
                             currentActivity['title'], // activity title
                             style: titleStyle,

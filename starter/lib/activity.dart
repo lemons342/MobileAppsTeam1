@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils.dart';
 import 'account_model.dart';
 
+
 /// Name: Stephanie Amundson 
 /// Date: 12/13/2022
 /// Description: Activity object for the app. Each activity has a title, and
@@ -34,13 +35,6 @@ class Activity {
   }
 }
 
-/// Name: 
-/// Date: 12//2022
-/// Description: 
-/// Bugs: None that I know of
-/// Reflection: 
-
-
 class ActivityScreen extends StatefulWidget {
   final AccountModel model;
 
@@ -70,9 +64,13 @@ class _ActivityScreenState extends State<ActivityScreen> {
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
+<<<<<<< HEAD
         future: activities
             .where('date', isEqualTo: '')
             .get(), //calling all activities from Firebase
+=======
+        future: activities.where('date', isEqualTo: '').get(), //calling all activities from Firebase that are not time sensitive events
+>>>>>>> 3b680cc8bf2768890eab48ab1abb97a85f5ae9a9
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -89,11 +87,18 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     'ACTIVITIES',
                     textAlign: TextAlign.center,
                     style: TextStyle(
+<<<<<<< HEAD
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.5,
                       //decoration: TextDecoration.underline
                     ),
+=======
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                        ),
+>>>>>>> 3b680cc8bf2768890eab48ab1abb97a85f5ae9a9
                   ),
                 ),
                 const Padding(
@@ -115,7 +120,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             style: titleStyle,
                           ),
                           subtitle: Text(
-                            currentActivity['description'], // activity title
+                            currentActivity['description'], // activity description
                             style: descriptionStyle,
                             maxLines: 2,
                           ),

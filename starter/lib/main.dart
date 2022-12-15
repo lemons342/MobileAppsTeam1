@@ -3,7 +3,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
 import 'createaccount.dart';
 import 'activity.dart';
@@ -14,11 +13,13 @@ import 'account_model.dart';
 import 'events.dart';
 
 /**
- * Name: 
+ * Name: Nick Lemerond
  * Date: 12//2022
- * Description: 
+ * Description: Main class of the project that houses the top AppBar widget and 
+ *    the bottom navigation bar
  * Bugs: None that I know of
- * Reflection: 
+ * Reflection: I went off a example you had in class that made this part
+ *    of starting the project very easy.
  */
 
 //Connecting to database before running app
@@ -52,7 +53,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int selectedIndex = 3; //default index to start at learn more/signed up
+  int selectedIndex = 4; //default index to start at log in/create account
 
   void _handleTap(int index) {
     setState(() {
@@ -98,14 +99,12 @@ class _MyAppState extends State<MyApp> {
                   ), 
               toolbarHeight: 70,
             ),
-            body: tabViews[selectedIndex], //call to view depending on index
-            bottomNavigationBar: BottomNavigationBar(
+            body: tabViews[selectedIndex], //BODY: call to view depending on index from nav bar
+            bottomNavigationBar: BottomNavigationBar( //nav bar that contains all tabs for the user to choose
               currentIndex: selectedIndex,
               selectedIconTheme:
                   const IconThemeData(color: Color(0xFF00FC87), size: 30),
               unselectedItemColor: Colors.white,
-              //unselectedLabelStyle: TextStyle(overflow: TextOverflow.visible),
-              //showUnselectedLabels: true,
               backgroundColor: Colors.black,
               onTap: _handleTap,
               items: const [

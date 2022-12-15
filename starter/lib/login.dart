@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'account_model.dart';
 import 'account.dart';
 
-/** Name: Seth Frevert
+/** Name: Seth Frevert, Nick Lemerond
 * Date: 12/13/2022
 * Description: A page to use to login in users
 * Bugs: None that I know of

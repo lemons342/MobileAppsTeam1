@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'account_model.dart';
 import 'utils.dart';
 
-/// Name: Stephanie Amundson
+/// Name: Stephanie Amundson, Nick Lemerond
 /// Date: 12/13/2022
 /// Description: Details page that shows the title, date, description, and
 ///              image of an activity

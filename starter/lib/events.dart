@@ -6,16 +6,17 @@ import 'utils.dart';
 import 'account_model.dart';
 
 /**
- * Name: 
+ * Name: Nick Lemerond
  * Date: 12//2022
- * Description: 
+ * Description: Pretty much a copy and paste with the activity 
+ *    page but formatting the ListTile with dates in the leading
  * Bugs: None that I know of
- * Reflection: 
+ * Reflection: Pretty straight forward, not much issues
  */
 
-Widget printDate(String date, TextStyle style) { //Sets print layour of date in ListTile
-  String monthDay = date.substring(5,10);
-  String year = date.substring(0,4);
+Widget printDate(String date, TextStyle style) { //Sets print layout of date in ListTile
+  String monthDay = date.substring(5,10); 
+  String year = date.substring(0,4);  //for date formatting
 
   if (monthDay[0] == '0') { //cutting out leading '0'
     monthDay = date.substring(6,10);
@@ -39,6 +40,7 @@ class EventScreen extends StatefulWidget {
 }
 
 class _EventScreenState extends State<EventScreen> {
+  //Text styles
   final TextStyle titleStyle =
       const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'Montserrat');
 
@@ -54,7 +56,7 @@ class _EventScreenState extends State<EventScreen> {
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
-        future: activities.where('date', isNotEqualTo: '').get(), //calling all activities from Firebase
+        future: activities.where('date', isNotEqualTo: '').get(), //calling all activities from Firebase that have dates
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -65,7 +67,7 @@ class _EventScreenState extends State<EventScreen> {
                 snapshot.data!.docs; // all docs
             return Column(
               children: [
-                const Padding(
+                const Padding( //Lines 70-87 are just for the EVENTS title decoration
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     'EVENTS',
@@ -74,7 +76,6 @@ class _EventScreenState extends State<EventScreen> {
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
-                        //decoration: TextDecoration.underline
                         ),
                   ),
                 ),
@@ -89,7 +90,7 @@ class _EventScreenState extends State<EventScreen> {
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.separated(
                       itemCount: currentActivities.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, index) { //itemBuilder populates ListTile with events pulled from the database
                         var currentActivity =
                             currentActivities[index]; // the map stored in a QDS
                         return ListTile(
@@ -99,17 +100,17 @@ class _EventScreenState extends State<EventScreen> {
                           ),
                           minLeadingWidth: 60,  //sets minimum width of leading                       
                           leading: printDate(
-                            currentActivity['date'], // activity title
-                            dateStyle,
+                            currentActivity['date'], // activity date
+                            dateStyle,//
                           ),
                           subtitle: Text(
-                            currentActivity['description'], // activity title
+                            currentActivity['description'], // activity description
                             style: descriptionStyle,
                             maxLines: 2,
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.chevron_right),
-                            onPressed: () => showDetailedInfo(
+                            onPressed: () => showDetailedInfo(  //opens Activity Details page with selected event
                               widget.model, context, currentActivity,
                               isSignedUp: false, isFavorited: false
                             ),
@@ -131,20 +132,4 @@ class _EventScreenState extends State<EventScreen> {
           }
         });
   }
-  //unused function
-  // Future<QuerySnapshot> _getActivities() async {
-  //   // method will be changed to interact with the database to only
-  //   // pull activities whose date matches the date in the parameter
-  //   CollectionReference activities = FirebaseFirestore.instance.collection('activities');
-  //   Future<QuerySnapshot> allActivities = activities.get();
-  //   allActivities.then((querySnapshot) {
-  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) {
-  //       Text('data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
-  //     }
-  //   });
-
-  //   print('print');
-  //   print(allActivities);
-  //   return allActivities;
-  // }
 }

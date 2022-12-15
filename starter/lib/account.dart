@@ -7,7 +7,7 @@ import 'account_model.dart';
 import 'utils.dart';
 
 /**
- * Name: Seth Frevert
+ * Name: Seth Frevert, Nick Lemerond
  * Date: 12/13/2022
  * Description: Display user's email and favorite activities 
  * Bugs: None that I know of

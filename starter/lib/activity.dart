@@ -4,12 +4,12 @@ import 'utils.dart';
 import 'account_model.dart';
 
 
-/// Name: Stephanie Amundson 
+/// Name: Nick Lemerond, Stephanie Amundson
 /// Date: 12/13/2022
 /// Description: Activity object for the app. Each activity has a title, and
 ///              and possible image, description, and date 
 /// Bugs: None that I know of
-/// Reflection: Implementing was pretty straightforward
+/// Reflection: Implementing was pretty straight forward
 
 class Activity {
   Image? image;
@@ -64,13 +64,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
-<<<<<<< HEAD
-        future: activities
-            .where('date', isEqualTo: '')
-            .get(), //calling all activities from Firebase
-=======
         future: activities.where('date', isEqualTo: '').get(), //calling all activities from Firebase that are not time sensitive events
->>>>>>> 3b680cc8bf2768890eab48ab1abb97a85f5ae9a9
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -81,24 +75,16 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 snapshot.data!.docs; // all docs
             return Column(
               children: [
-                const Padding(
+                const Padding( //Lines 78-94 are just for the ACTIVITIES title decoration
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     'ACTIVITIES',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-<<<<<<< HEAD
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
-                      //decoration: TextDecoration.underline
-                    ),
-=======
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
                         ),
->>>>>>> 3b680cc8bf2768890eab48ab1abb97a85f5ae9a9
                   ),
                 ),
                 const Padding(
@@ -126,7 +112,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.chevron_right),
-                            onPressed: () => showDetailedInfo(
+                            onPressed: () => showDetailedInfo( //opens Activity Details page with selected activity
                                 widget.model, context, currentActivity,
                                 isSignedUp: false, isFavorited: false),
                           ),
@@ -147,20 +133,4 @@ class _ActivityScreenState extends State<ActivityScreen> {
           }
         });
   }
-  //unused function
-  // Future<QuerySnapshot> _getActivities() async {
-  //   // method will be changed to interact with the database to only
-  //   // pull activities whose date matches the date in the parameter
-  //   CollectionReference activities = FirebaseFirestore.instance.collection('activities');
-  //   Future<QuerySnapshot> allActivities = activities.get();
-  //   allActivities.then((querySnapshot) {
-  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) {
-  //       Text('data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
-  //     }
-  //   });
-
-  //   print('print');
-  //   print(allActivities);
-  //   return allActivities;
-  // }
 }

@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'account_model.dart';
 
 /**
- * Name: Seth Frevert
+ * Name: Seth Frevert, Nick Lemerond
  * Date: 12/13/2022
  * Description: The page to display the form to create a new user account
  * Bugs: None that I know of

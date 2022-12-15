@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'utils.dart';
@@ -6,11 +8,13 @@ import 'package:url_launcher/url_launcher.dart';
 import 'account_model.dart';
 
 /**
- * Name: 
+ * Name: Nick Lemerond
  * Date: 12//2022
- * Description: 
+ * Description: Provides a link to the user to open a webpage to the BBBS website. Shows
+ *    the user their signed up activities
  * Bugs: None that I know of
- * Reflection: 
+ * Reflection: At first this used to just have the sign up ListTile but I took your suggestion 
+ *    from class and added a bit more to the top to fill the space as you will see
  */
 
 /// Home screen page
@@ -56,8 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Column(
               children: [
                 const Divider(color: Colors.grey, thickness: 1.0, height: 1.0),
-                DecoratedBox(
-                  //title bar(top of screen)
+                DecoratedBox( //Lines 61-96 are for the BBBS exerpt
                   decoration: const BoxDecoration(color: Colors.black),
                   child: Column(
                     children: [
@@ -83,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextButton(
-                            onPressed: _launchUrl,
+                            onPressed: _launchUrl,  //calls method to launch webapge to BBBS website
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.black,
                               backgroundColor: const Color(0xFF00FC87),
@@ -93,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                const Padding(
+                const Padding(  //Lines 97-113 are for the SIGNED UP ACTIVITIES decoration
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     'SIGNED UP ACTIVITIES',
@@ -102,7 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.5,
-                      //decoration: TextDecoration.underline
                     ),
                   ),
                 ),
@@ -116,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.separated(
                       itemCount: currentActivities.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, index) { //itemBuilder populates ListTile with actvities/events pulled from the database that the user signed up for
                         var currentActivity =
                             currentActivities[index]; // the map stored in a QDS
                         return ListTile(
@@ -145,30 +147,13 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         });
   }
-
+  /**
+   * Method to launch the BBBS website
+   */
   Future<void> _launchUrl() async {
     final Uri url = Uri.parse('https://www.bbbs.org/about-us/');
     if (!await launchUrl(url)) {
       throw 'Could not launch $url';
     }
   }
-
-  //unused function
-  // Future<QuerySnapshot> _getActivities() async {
-  //   // method will be changed to interact with the database to only
-  //   // pull activities whose date matches the date in the parameter
-  //   CollectionReference activities =
-  //       FirebaseFirestore.instance.collection('activities');
-  //   Future<QuerySnapshot> allActivities = activities.get();
-  //   allActivities.then((querySnapshot) {
-  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) {
-  //       Text(
-  //           'data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
-  //     }
-  //   });
-
-  //   print('print');
-  //   print(allActivities);
-  //   return allActivities;
-  // }
 }

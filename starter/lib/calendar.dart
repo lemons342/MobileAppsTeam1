@@ -5,7 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'utils.dart';
 import 'account_model.dart';
 
-/// Name: Stephanie Amundson
+/// Name: Stephanie Amundson, Nick Lemerond
 /// Date: 12/13/2022
 /// Description: Calendar page that uses a calendar widget from pub.dev. The
 ///              top half is an interactive calendar and the bottom half is

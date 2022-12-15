@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: const Icon(Icons.chevron_right),
                             onPressed: () => showDetailedInfo(
                                 widget.model, context, currentActivity,
-                                isSignedUp: true),
+                                isSignedUp: true, isFavorited: false),
                           ),
                         );
                       },

@@ -132,7 +132,7 @@ class _CalendarState extends State<Calendar> {
                         trailing: IconButton(
                           icon: const Icon(Icons.chevron_right),
                           onPressed: () => showDetailedInfo(
-                            widget.model, context, currentActivity, isSignedUp: false),
+                            widget.model, context, currentActivity, isSignedUp: false, isFavorited: false),
                         ),
                       );
                     },

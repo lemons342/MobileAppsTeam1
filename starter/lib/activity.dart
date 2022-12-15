@@ -113,7 +113,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             icon: const Icon(Icons.chevron_right),
                             onPressed: () => showDetailedInfo(
                                 widget.model, context, currentActivity,
-                                isSignedUp: false),
+                                isSignedUp: false, isFavorited: false),
                           ),
                         );
                       },

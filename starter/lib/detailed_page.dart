@@ -16,7 +16,7 @@ import 'utils.dart';
 class DetailedPage extends StatefulWidget {
   final QueryDocumentSnapshot activity;
   final bool withDeleteButton;
-  //final bool withRemoveButton;
+  final bool withRemoveButton;
   final AccountModel model;
 
   const DetailedPage(
@@ -24,7 +24,7 @@ class DetailedPage extends StatefulWidget {
         required this.model,
         required this.activity,
         required this.withDeleteButton,
-        //required this.withRemoveButton
+        required this.withRemoveButton
         }
       )
       : super(key: key);
@@ -65,7 +65,7 @@ class _DetailedPageState extends State<DetailedPage> {
             child: const Text('Sign Up', style: TextStyle(color: Colors.white)));
 
     final IconButton favoriteButton = widget
-            .withDeleteButton // show add or delete button
+            .withRemoveButton // show add or delete button
         ? IconButton(
             onPressed: () {
               removeUserFavorite(context, widget.model, widget.activity);

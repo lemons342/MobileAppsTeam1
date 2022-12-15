@@ -52,7 +52,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int selectedIndex = 4; //default index to start at login/account
+  int selectedIndex = 3; //default index to start at learn more/signed up
 
   void _handleTap(int index) {
     setState(() {

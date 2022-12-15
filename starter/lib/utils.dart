@@ -20,13 +20,14 @@ Future<QuerySnapshot<Map<String, dynamic>>> getAllActivities() {
 /// creates a new route to display the details page of the clicked on activity
 void showDetailedInfo(
     AccountModel model, BuildContext context, currentActivity, // update type
-    {required bool isSignedUp}) {
+    {required bool isSignedUp, required bool isFavorited}) {
   Navigator.of(context).push(
     MaterialPageRoute(
         builder: (context) => DetailedPage(
               model: model,
               activity: currentActivity,
               withDeleteButton: isSignedUp,
+              withRemoveButton: isFavorited,
             )),
   );
 }

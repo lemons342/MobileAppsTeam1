@@ -215,22 +215,11 @@ class _CalendarState extends State<Calendar> {
             title: doc['title'],
             description: doc['description'],
             date: DateTime.parse(doc['date']));
-        //print(currentActivity.date);
         validActivities.add(currentActivity);
       }
     });
 
-    //for (var doc in events.docs) {
-    //  Activity currentActivity = Activity(
-    //      title: doc['title'],
-    //      description: doc['description'],
-    //      date: DateTime.parse(doc['date']));
-
-    //  validActivities.add(currentActivity);
-    //}
-
     activities.putIfAbsent(day, () => validActivities);
-    //activities.update(day, (value) => validActivities);
 
     return validActivities;
   }

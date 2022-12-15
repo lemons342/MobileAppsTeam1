@@ -64,13 +64,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
-<<<<<<< HEAD
-        future: activities
-            .where('date', isEqualTo: '')
-            .get(), //calling all activities from Firebase
-=======
         future: activities.where('date', isEqualTo: '').get(), //calling all activities from Firebase that are not time sensitive events
->>>>>>> 3b680cc8bf2768890eab48ab1abb97a85f5ae9a9
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -87,18 +81,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     'ACTIVITIES',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-<<<<<<< HEAD
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
-                      //decoration: TextDecoration.underline
-                    ),
-=======
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
                         ),
->>>>>>> 3b680cc8bf2768890eab48ab1abb97a85f5ae9a9
                   ),
                 ),
                 const Padding(
@@ -147,20 +133,4 @@ class _ActivityScreenState extends State<ActivityScreen> {
           }
         });
   }
-  //unused function
-  // Future<QuerySnapshot> _getActivities() async {
-  //   // method will be changed to interact with the database to only
-  //   // pull activities whose date matches the date in the parameter
-  //   CollectionReference activities = FirebaseFirestore.instance.collection('activities');
-  //   Future<QuerySnapshot> allActivities = activities.get();
-  //   allActivities.then((querySnapshot) {
-  //     for (QueryDocumentSnapshot qds in querySnapshot.docs) {
-  //       Text('data: ${qds['title']}, ${qds['description']}, ${qds['date']}'); //unecessary
-  //     }
-  //   });
-
-  //   print('print');
-  //   print(allActivities);
-  //   return allActivities;
-  // }
 }

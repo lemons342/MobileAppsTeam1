@@ -1,9 +1,19 @@
+// ignore_for_file: slash_for_doc_comments
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'activity.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'utils.dart';
 import 'account_model.dart';
+
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
 
 class Calendar extends StatefulWidget {
   final AccountModel model;
@@ -122,7 +132,7 @@ class _CalendarState extends State<Calendar> {
                         trailing: IconButton(
                           icon: const Icon(Icons.chevron_right),
                           onPressed: () => showDetailedInfo(
-                            widget.model, context, currentActivity, isSignedUp: false),
+                            widget.model, context, currentActivity, isSignedUp: false, isFavorited: false),
                         ),
                       );
                     },

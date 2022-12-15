@@ -1,15 +1,22 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'account_model.dart';
 import 'utils.dart';
 
-/// 
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
+
 class DetailedPage extends StatefulWidget {
   final QueryDocumentSnapshot activity;
   final bool withDeleteButton;
-  //final bool withRemoveButton;
+  final bool withRemoveButton;
   final AccountModel model;
 
   const DetailedPage(
@@ -17,7 +24,7 @@ class DetailedPage extends StatefulWidget {
         required this.model,
         required this.activity,
         required this.withDeleteButton,
-        //required this.withRemoveButton
+        required this.withRemoveButton
         }
       )
       : super(key: key);
@@ -58,7 +65,7 @@ class _DetailedPageState extends State<DetailedPage> {
             child: const Text('Sign Up', style: TextStyle(color: Colors.white)));
 
     final IconButton favoriteButton = widget
-            .withDeleteButton // show add or delete button
+            .withRemoveButton // show add or delete button
         ? IconButton(
             onPressed: () {
               removeUserFavorite(context, widget.model, widget.activity);

@@ -1,7 +1,17 @@
+// ignore_for_file: slash_for_doc_comments
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils.dart';
 import 'account_model.dart';
+
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
 
 Widget printDate(String date, TextStyle style) { //Sets print layour of date in ListTile
   String monthDay = date.substring(5,10);
@@ -106,7 +116,7 @@ class _EventScreenState extends State<EventScreen> {
                             icon: const Icon(Icons.chevron_right),
                             onPressed: () => showDetailedInfo(
                               widget.model, context, currentActivity,
-                              isSignedUp: false
+                              isSignedUp: false, isFavorited: false
                             ),
                           ),
                         );

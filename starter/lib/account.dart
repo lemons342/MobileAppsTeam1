@@ -1,9 +1,18 @@
-// ignore_for_file: avoid_types_as_parameter_names
+// ignore_for_file: avoid_types_as_parameter_names, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'account_model.dart';
+import 'utils.dart';
+
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
 
 class Account extends StatefulWidget {
   const Account({Key? key, required this.model}) : super(key: key);
@@ -66,8 +75,8 @@ class _AccountState extends State<Account> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  FutureBuilder<QuerySnapshot>(
-                      future: _getFavoriteActivities(
+                  StreamBuilder<QuerySnapshot>(
+                      stream: _getFavoriteActivities(
                           email: widget.model.GetUserEmail()),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -83,12 +92,22 @@ class _AccountState extends State<Account> {
                               height: 400.0,
                               width: 350.0,
                               child: ListView.separated(
-                                  itemCount: snapshot.data!.size,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                        title: Text(activities[index]['title'],
-                                            style: const TextStyle(
-                                                fontSize: 18.0)));
+                      itemCount: activities.length,
+                      itemBuilder: (context, index) {
+                        var currentActivity =
+                            activities[index]; // the map stored in a QDS
+                        return ListTile(
+                          title: Text(
+                            currentActivity['title'], // activity title
+                            style: titleStyle,
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.chevron_right),
+                            onPressed: () => showDetailedInfo(
+                                widget.model, context, currentActivity,
+                                isSignedUp: false, isFavorited: true),
+                          ),
+                        );
                                   },
                                   separatorBuilder: (context, int) =>
                                       const Divider(
@@ -115,10 +134,10 @@ class _AccountState extends State<Account> {
   }
 
   //Used to retrieve favorited activites of the user
-  Future<QuerySnapshot> _getFavoriteActivities({required String email}) {
+  Stream<QuerySnapshot> _getFavoriteActivities({required String email}) {
     return FirebaseFirestore.instance
         .collection('activities')
         .where('favorited', arrayContains: email)
-        .get();
+        .snapshots();
   }
 }

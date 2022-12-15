@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
             key: _formKey,
             child: Column(children: [
               Padding(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Email',
@@ -50,7 +50,7 @@ class _LoginState extends State<Login> {
                 onSaved: (text) => emailAddress = text!,
               ),),
               Padding(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: TextFormField(
                 obscureText: true,
                 enableSuggestions: false,

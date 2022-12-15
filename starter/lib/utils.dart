@@ -3,6 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'detailed_page.dart';
 import 'account_model.dart';
 
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
+
 /// gets all activities from the database
 Future<QuerySnapshot<Map<String, dynamic>>> getAllActivities() {
   final allActivities = FirebaseFirestore.instance.collection('activities');
@@ -12,13 +20,14 @@ Future<QuerySnapshot<Map<String, dynamic>>> getAllActivities() {
 /// creates a new route to display the details page of the clicked on activity
 void showDetailedInfo(
     AccountModel model, BuildContext context, currentActivity, // update type
-    {required bool isSignedUp}) {
+    {required bool isSignedUp, required bool isFavorited}) {
   Navigator.of(context).push(
     MaterialPageRoute(
         builder: (context) => DetailedPage(
               model: model,
               activity: currentActivity,
               withDeleteButton: isSignedUp,
+              withRemoveButton: isFavorited,
             )),
   );
 }

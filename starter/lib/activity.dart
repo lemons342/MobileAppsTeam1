@@ -5,7 +5,7 @@ import 'account_model.dart';
 
 /**
  * Name: 
- * Date: 12//2022
+ * Date: 12/14/2022
  * Description: 
  * Bugs: None that I know of
  * Reflection: 
@@ -61,7 +61,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
         FirebaseFirestore.instance.collection('activities');
 
     return FutureBuilder<QuerySnapshot>(
-        future: activities.where('date', isEqualTo: '').get(), //calling all activities from Firebase
+        future: activities.where('date', isEqualTo: '').get(), //calling all activities from Firebase that are not time sensitive events
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -81,7 +81,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
-                        //decoration: TextDecoration.underline
                         ),
                   ),
                 ),
@@ -105,7 +104,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             style: titleStyle,
                           ),
                           subtitle: Text(
-                            currentActivity['description'], // activity title
+                            currentActivity['description'], // activity description
                             style: descriptionStyle,
                             maxLines: 2,
                             ),

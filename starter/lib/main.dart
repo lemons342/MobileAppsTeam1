@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments
+
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +12,14 @@ import 'home_screen.dart';
 import 'login.dart';
 import 'account_model.dart';
 import 'events.dart';
+
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
 
 //Connecting to database before running app
 void main() async {

@@ -3,6 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils.dart';
 import 'account_model.dart';
 
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
+
 /// Activity class that stores a title and possible image, description, and date
 class Activity {
   Image? image;

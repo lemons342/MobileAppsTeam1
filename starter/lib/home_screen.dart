@@ -7,6 +7,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'account_model.dart';
 
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
+
 /// Home screen page
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.model}) : super(key: key);

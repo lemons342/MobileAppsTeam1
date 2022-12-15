@@ -3,6 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'detailed_page.dart';
 import 'account_model.dart';
 
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
+
 /// gets all activities from the database
 Future<QuerySnapshot<Map<String, dynamic>>> getAllActivities() {
   final allActivities = FirebaseFirestore.instance.collection('activities');

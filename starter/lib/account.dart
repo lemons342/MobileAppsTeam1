@@ -1,9 +1,17 @@
-// ignore_for_file: avoid_types_as_parameter_names
+// ignore_for_file: avoid_types_as_parameter_names, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'account_model.dart';
+
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
 
 class Account extends StatefulWidget {
   const Account({Key? key, required this.model}) : super(key: key);

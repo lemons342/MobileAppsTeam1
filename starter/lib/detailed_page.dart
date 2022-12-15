@@ -1,9 +1,17 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'account_model.dart';
 import 'utils.dart';
+
+/**
+ * Name: 
+ * Date: 12//2022
+ * Description: 
+ * Bugs: None that I know of
+ * Reflection: 
+ */
 
 class DetailedPage extends StatefulWidget {
   final QueryDocumentSnapshot activity;
